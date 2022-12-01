@@ -1,5 +1,3 @@
-import { ErrorMessages, errorMessages } from './data/errorMessages';
-
 const factions = [
   "Undead",
   "Wild",

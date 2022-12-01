@@ -3,9 +3,17 @@ import { factions, ArmyInterface } from "../ArmyUnitTypes";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
 import { armyData } from "../data/armies";
+import { addUnitsToLocalStorage } from '../helpers/localstorage';
 
 const ArmySelector = () => {
   const { setArmy } = React.useContext(ArmyContext);
+
+  const handleSetArmy = (faction: typeof factions[number]) => {
+    setArmy(
+      armyData.find(({ name }) => name === faction) as ArmyInterface
+    )
+    addUnitsToLocalStorage('army', faction)
+  }
 
   return (
     <Box
@@ -25,12 +33,7 @@ const ArmySelector = () => {
         {factions.map((faction) => (
           <Button
             key={faction}
-            onClick={() =>
-              setArmy(
-                armyData.find(({ name }) => name === faction) as ArmyInterface
-              )
-            }
-          >
+            onClick={() => handleSetArmy(faction)}>
             {faction}
           </Button>
         ))}
