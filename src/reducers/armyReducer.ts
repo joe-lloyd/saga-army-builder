@@ -1,5 +1,5 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
-import { ArmyProviderState } from "../contexts/armyContext";
+import { ArmyInitialState } from "../contexts/armyContext";
 
 enum armyActions {
   SET_ARMY = "SET_ARMY",
@@ -10,16 +10,11 @@ interface ArmyActions {
   payload?: UnitDetails<Unit>[] | UnitDetails<Unit> | ArmyInterface;
 }
 
-const initialState: ArmyProviderState = {
-  army: undefined,
-  setArmy: (army: ArmyInterface) => {},
-};
-
 //Reducer to Handle Actions
 const armyReducer = (
-  state: ArmyProviderState,
+  state: ArmyInitialState,
   action: ArmyActions
-): ArmyProviderState => {
+): ArmyInitialState => {
   const { type, payload } = action;
 
   switch (type) {
@@ -33,4 +28,4 @@ const armyReducer = (
   }
 };
 
-export { armyReducer, armyActions, initialState };
+export { armyReducer, armyActions };

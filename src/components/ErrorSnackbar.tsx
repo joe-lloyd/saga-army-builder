@@ -5,8 +5,6 @@ import { ErrorContext } from "../contexts/errorContext";
 const ErrorSnackbar = () => {
   const { errorMessage, clearError } = React.useContext(ErrorContext);
 
-  console.log(errorMessage);
-
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string

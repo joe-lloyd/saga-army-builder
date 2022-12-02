@@ -17,7 +17,12 @@ interface UnitProviderState {
 const UnitContext = React.createContext(initialState);
 
 const UnitProvider: React.FC<any> = ({ children }) => {
-  const [state, dispatch] = React.useReducer(unitReducer, initialState);
+  const units = localStorage.getItem("units");
+  const hydratedInitialState = units
+    ? { ...initialState, units: JSON.parse(units) }
+    : initialState;
+
+  const [state, dispatch] = React.useReducer(unitReducer, hydratedInitialState);
 
   const value: UnitProviderState = {
     units: state.units,

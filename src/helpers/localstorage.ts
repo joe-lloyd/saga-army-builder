@@ -1,11 +1,13 @@
-
-
-const addUnitsToLocalStorage = (key: string, value: {}) => {
+const addToLocalStorage = (key: string, value: {} | string) => {
   try {
-    window.localStorage.setItem(key, JSON.stringify(value))
+    if (typeof value === "string") {
+      window.localStorage.setItem(key, value);
+    } else {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
-}
+};
 
-export { addUnitsToLocalStorage };
+export { addToLocalStorage };

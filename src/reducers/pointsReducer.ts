@@ -1,4 +1,5 @@
 import { PointsProviderState } from "../contexts/pointsContext";
+import { addToLocalStorage } from "../helpers/localstorage";
 
 enum actions {
   SET_INITIAL_POINTS = "SET_INITIAL_POINTS",
@@ -28,28 +29,33 @@ const pointsReducer = (
 
   switch (type) {
     case actions.SET_INITIAL_POINTS:
+      addToLocalStorage("points", `${points}`);
       return {
         ...state,
         initialPoints: points,
         currentPoints: points,
       };
     case actions.SPEND_POINTS: {
+      if (state.currentPoints - points >= 0) {
+        addToLocalStorage("points", `${state.currentPoints - points}`);
+        return {
+          ...state,
+          currentPoints: state.currentPoints - points,
+        };
+      }
       return {
         ...state,
-        currentPoints:
-          state.currentPoints - points >= 0
-            ? state.currentPoints - points
-            : state.currentPoints,
       };
     }
     case actions.RECEIVE_POINTS: {
-      return {
-        ...state,
-        currentPoints:
-          state.currentPoints + points <= state.initialPoints
-            ? state.currentPoints + points
-            : state.currentPoints,
-      };
+      if (state.currentPoints + points <= state.initialPoints) {
+        addToLocalStorage("points", `${state.currentPoints + points}`);
+        return {
+          ...state,
+          currentPoints: state.currentPoints + points,
+        };
+      }
+      return { ...state };
     }
     default:
       return state;

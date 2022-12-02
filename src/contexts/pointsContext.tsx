@@ -17,7 +17,15 @@ interface PointsProviderState {
 const PointsContext = React.createContext(initialState);
 
 const PointsProvider: React.FC<any> = ({ children }) => {
-  const [state, dispatch] = React.useReducer(pointsReducer, initialState);
+  const currentPoints = localStorage.getItem("points");
+  const hydratedInitialState = currentPoints
+    ? { ...initialState, currentPoints: parseInt(currentPoints) }
+    : initialState;
+
+  const [state, dispatch] = React.useReducer(
+    pointsReducer,
+    hydratedInitialState
+  );
 
   const value: PointsProviderState = {
     initialPoints: state.initialPoints,

@@ -2,18 +2,15 @@ import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import { factions, ArmyInterface } from "../ArmyUnitTypes";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
-import { armyData } from "../data/armies";
-import { addUnitsToLocalStorage } from '../helpers/localstorage';
+import { addToLocalStorage } from "../helpers/localstorage";
 
 const ArmySelector = () => {
-  const { setArmy } = React.useContext(ArmyContext);
+  const { setArmy, armies } = React.useContext(ArmyContext);
 
   const handleSetArmy = (faction: typeof factions[number]) => {
-    setArmy(
-      armyData.find(({ name }) => name === faction) as ArmyInterface
-    )
-    addUnitsToLocalStorage('army', faction)
-  }
+    addToLocalStorage("army", faction);
+    setArmy(armies.find(({ name }) => name === faction) as ArmyInterface);
+  };
 
   return (
     <Box
@@ -31,9 +28,7 @@ const ArmySelector = () => {
         aria-label="outlined primary button group"
       >
         {factions.map((faction) => (
-          <Button
-            key={faction}
-            onClick={() => handleSetArmy(faction)}>
+          <Button key={faction} onClick={() => handleSetArmy(faction)}>
             {faction}
           </Button>
         ))}
