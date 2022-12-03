@@ -68,7 +68,7 @@ const createMindless = (): UnitDetails<Unit> => {
   return {
     unit: "Mindless",
     unitSize: 20,
-    equipmentOptions: "none",
+    equipmentOptions: "None",
     armour: {
       melee: 4,
       shooting: 4,

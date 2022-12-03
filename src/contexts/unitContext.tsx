@@ -11,6 +11,7 @@ interface UnitProviderState {
   setInitialUnits: (units: UnitDetails<Unit>[]) => void;
   addUnit: (unit: UnitDetails<Unit>) => void;
   removeUnit: (unit: UnitDetails<Unit>) => void;
+  resetUnits: () => void;
 }
 
 //Context and Provider
@@ -35,6 +36,9 @@ const UnitProvider: React.FC<any> = ({ children }) => {
     removeUnit: (unit: UnitDetails<Unit>) => {
       dispatch({ type: unitActions.REMOVE_UNIT, payload: unit });
     },
+    resetUnits: () => {
+      dispatch({ type: unitActions.RESET_UNITS });
+    }
   };
 
   return <UnitContext.Provider value={value}>{children}</UnitContext.Provider>;

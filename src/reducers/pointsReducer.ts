@@ -1,15 +1,16 @@
 import { PointsProviderState } from "../contexts/pointsContext";
-import { addToLocalStorage } from "../helpers/localstorage";
+import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
 
 enum actions {
   SET_INITIAL_POINTS = "SET_INITIAL_POINTS",
   SPEND_POINTS = "SPEND_POINTS",
   RECEIVE_POINTS = "RECEIVE_POINTS",
+  RESET_POINTS = "RESET_POINTS",
 }
 
 interface Actions {
   type: actions;
-  points: number;
+  points?: number;
 }
 
 const initialState = {
@@ -18,6 +19,7 @@ const initialState = {
   setInitialPoints: (points: number) => {},
   spendPoints: (points: number) => {},
   receivePoints: (points: number) => {},
+  resetPoints: () => {},
 };
 
 //Reducer to Handle Actions
@@ -29,15 +31,17 @@ const pointsReducer = (
 
   switch (type) {
     case actions.SET_INITIAL_POINTS:
-      addToLocalStorage("points", `${points}`);
+      if(typeof points !== 'number') return state;
+      addToLocalStorage(LocalstorageKeys.points, `${points}`);
       return {
         ...state,
         initialPoints: points,
         currentPoints: points,
       };
     case actions.SPEND_POINTS: {
+      if(typeof points !== 'number') return state;
       if (state.currentPoints - points >= 0) {
-        addToLocalStorage("points", `${state.currentPoints - points}`);
+        addToLocalStorage(LocalstorageKeys.points, `${state.currentPoints - points}`);
         return {
           ...state,
           currentPoints: state.currentPoints - points,
@@ -48,14 +52,19 @@ const pointsReducer = (
       };
     }
     case actions.RECEIVE_POINTS: {
+      if(typeof points !== 'number') return state;
       if (state.currentPoints + points <= state.initialPoints) {
-        addToLocalStorage("points", `${state.currentPoints + points}`);
+        addToLocalStorage(LocalstorageKeys.points, `${state.currentPoints + points}`);
         return {
           ...state,
           currentPoints: state.currentPoints + points,
         };
       }
       return { ...state };
+    }
+    case actions.RESET_POINTS: {
+      addToLocalStorage(LocalstorageKeys.points, 8)
+      return initialState;
     }
     default:
       return state;

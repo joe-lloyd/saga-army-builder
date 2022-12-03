@@ -1,11 +1,12 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import { UnitProviderState } from "../contexts/unitContext";
-import { addToLocalStorage } from "../helpers/localstorage";
+import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
 
 enum unitActions {
   SET_INITIAL_UNITS = "SET_INITIAL_UNITS",
   ADD_UNIT = "ADD_UNIT",
   REMOVE_UNIT = "REMOVE_UNIT",
+  RESET_UNITS = "RESET_UNITS",
 }
 
 interface ArmyActions {
@@ -18,6 +19,7 @@ const initialState: UnitProviderState = {
   setInitialUnits: (units: UnitDetails<Unit>[]) => {},
   addUnit: (unit: UnitDetails<Unit>) => {},
   removeUnit: (unit: UnitDetails<Unit>) => {},
+  resetUnits: () => {},
 };
 
 //Reducer to Handle Actions
@@ -29,13 +31,13 @@ const unitReducer = (
 
   switch (type) {
     case unitActions.SET_INITIAL_UNITS:
-      addToLocalStorage("units", JSON.stringify(payload));
+      addToLocalStorage(LocalstorageKeys.units, JSON.stringify(payload));
       return {
         ...state,
         units: payload as UnitDetails<Unit>[],
       };
     case unitActions.ADD_UNIT: {
-      addToLocalStorage("units", JSON.stringify([...state.units, payload]));
+      addToLocalStorage(LocalstorageKeys.units, JSON.stringify([...state.units, payload]));
       return {
         ...state,
         units: [...state.units, payload as UnitDetails<Unit>],
@@ -51,7 +53,7 @@ const unitReducer = (
 
       delete unitsInitialCopy[indexOfUnitToRemove];
       addToLocalStorage(
-        "units",
+        LocalstorageKeys.units,
         JSON.stringify(unitsInitialCopy.filter(Boolean))
       );
 
@@ -59,6 +61,10 @@ const unitReducer = (
         ...state,
         units: unitsInitialCopy.filter(Boolean),
       };
+    }
+    case unitActions.RESET_UNITS: {
+      addToLocalStorage(LocalstorageKeys.units, '');
+      return initialState;
     }
     default:
       return state;

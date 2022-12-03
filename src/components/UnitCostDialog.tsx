@@ -40,8 +40,12 @@ const UnitCostDialog: React.FC<UnitCostDialogInterface> = ({
       setSuccess("");
     } else {
       addUnit(unit);
-      // @ts-ignore
-      addUnit({ ...unitToTrade, unitSize: -unit.cost.units[unitToTrade.unit] });
+      addUnit({
+        ...unitToTrade,
+        // @ts-ignore
+        unitSize: -unit.cost.units[unitToTrade.unit],
+        unitPaidFor: unit.unit,
+      });
       setSuccess(`${unit.unit} ${unit.equipmentOptions} added`);
       setError("");
     }

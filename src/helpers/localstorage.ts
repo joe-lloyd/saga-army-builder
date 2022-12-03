@@ -1,4 +1,10 @@
-const addToLocalStorage = (key: string, value: {} | string) => {
+enum LocalstorageKeys {
+  army='army',
+  units="units",
+  points="points",
+}
+
+const addToLocalStorage = (key: LocalstorageKeys, value: {} | string) => {
   try {
     if (typeof value === "string") {
       window.localStorage.setItem(key, value);
@@ -10,4 +16,4 @@ const addToLocalStorage = (key: string, value: {} | string) => {
   }
 };
 
-export { addToLocalStorage };
+export { addToLocalStorage, LocalstorageKeys };

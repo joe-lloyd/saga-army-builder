@@ -42,10 +42,6 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
     }
   };
 
-  const handleOpenUnitDialog = () => {
-    setOpenUnitCostDialog(true);
-  };
-
   const handleRemoveUnit = (unit: UnitDetails<Unit>) => {
     receivePoints(unit.cost.points || 0);
     removeUnit(unit);
@@ -94,7 +90,7 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                   <>
                     <IconButton
                       aria-label="delete"
-                      onClick={() => handleOpenUnitDialog()}
+                      onClick={() => setOpenUnitCostDialog(true)}
                     >
                       <AddIcon />
                     </IconButton>

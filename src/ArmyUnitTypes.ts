@@ -49,6 +49,7 @@ interface UnitDetails<T> {
   };
   unitSize: number;
   rules?: {[key: string]: (units: UnitDetails<Unit>[]) => boolean};
+  unitPaidFor?: typeof units[number],
 }
 
 type Unit = typeof units[number];

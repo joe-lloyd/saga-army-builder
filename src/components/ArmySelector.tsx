@@ -2,13 +2,20 @@ import { Box, Button, ButtonGroup, Typography } from "@mui/material";
 import { factions, ArmyInterface } from "../ArmyUnitTypes";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
-import { addToLocalStorage } from "../helpers/localstorage";
+import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
+import { PointsContext } from '../contexts/pointsContext';
+import { UnitContext } from '../contexts/unitContext';
 
 const ArmySelector = () => {
-  const { setArmy, armies } = React.useContext(ArmyContext);
+  const { setArmy, armies, army } = React.useContext(ArmyContext);
+  const { resetPoints } = React.useContext(PointsContext);
+  const { resetUnits } = React.useContext(UnitContext);
 
   const handleSetArmy = (faction: typeof factions[number]) => {
-    addToLocalStorage("army", faction);
+    if (army && faction === army.name) return;
+    addToLocalStorage(LocalstorageKeys.army, faction);
+    resetPoints();
+    resetUnits();
     setArmy(armies.find(({ name }) => name === faction) as ArmyInterface);
   };
 

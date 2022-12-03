@@ -11,6 +11,7 @@ interface PointsProviderState {
   setInitialPoints: (points: number) => void;
   spendPoints: (points: number) => void;
   receivePoints: (points: number) => void;
+  resetPoints: () => void;
 }
 
 //Context and Provider
@@ -38,6 +39,9 @@ const PointsProvider: React.FC<any> = ({ children }) => {
     },
     receivePoints: (points: number) => {
       dispatch({ type: actions.RECEIVE_POINTS, points });
+    },
+    resetPoints: () => {
+      dispatch({ type: actions.RESET_POINTS });
     },
   };
 
