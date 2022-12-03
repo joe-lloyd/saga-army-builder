@@ -24,6 +24,13 @@ const units = [
   "Mindless",
 ] as const;
 
+interface UnitsToSpend {
+  Creature: number;
+  Hearthguards: number;
+  Warriors: number;
+  Levies?: number;
+}
+
 interface UnitDetails<T> {
   unit: T;
   equipmentOptions: string;
@@ -38,12 +45,7 @@ interface UnitDetails<T> {
   specialRules: Array<string>;
   cost: {
     points?: number;
-    units?: {
-      creature: number;
-      hearthguards: number;
-      warriors: number;
-      levies?: number;
-    };
+    units?: UnitsToSpend;
   };
   unitSize: number;
   rules?: {[key: string]: (units: UnitDetails<Unit>[]) => boolean};
@@ -56,5 +58,5 @@ interface ArmyInterface {
   units: { unitName: Unit; variants: UnitDetails<Unit>[] }[];
 }
 
-export type { ArmyInterface, UnitDetails, Unit };
+export type { ArmyInterface, UnitDetails, Unit, UnitsToSpend };
 export { units, factions };

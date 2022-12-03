@@ -8,6 +8,8 @@ import TableBody from "@mui/material/TableBody";
 import { Box } from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import { UnitContext } from "../contexts/unitContext";
+import { Unit, UnitDetails } from "../ArmyUnitTypes";
+import { combinedUnits } from '../helpers/combinedUnits';
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,6 +30,8 @@ const ArmyViewer = React.forwardRef(() => {
     return null;
   }
 
+  const parsedUnits = combinedUnits(units);
+
   return (
     <Box sx={style}>
       <TableContainer component={Paper}>
@@ -35,6 +39,7 @@ const ArmyViewer = React.forwardRef(() => {
           <TableHead>
             <TableRow>
               <TableCell>Unit</TableCell>
+              <TableCell>Size</TableCell>
               <TableCell>Equipment&nbsp;Options</TableCell>
               <TableCell align="right">Armour&nbsp;Melee(Shooting)</TableCell>
               <TableCell align="right">
@@ -45,26 +50,29 @@ const ArmyViewer = React.forwardRef(() => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {units.map((unit) => (
-              <TableRow
-                key={unit.equipmentOptions}
-                sx={{
-                  "&:last-child td, &:last-child th": {
-                    border: 0,
-                  },
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {unit.unit}
-                </TableCell>
-                <TableCell align="right">{unit.equipmentOptions}</TableCell>
-                <TableCell align="right">{`${unit.armour.melee}(${unit.armour.shooting})`}</TableCell>
-                <TableCell align="right">{`${unit.aggression.melee}(${unit.aggression.shooting})`}</TableCell>
-                <TableCell align="right" width={250}>
-                  {unit.specialRules.join(", ")}
-                </TableCell>
-              </TableRow>
-            ))}
+            {(Object.values(parsedUnits) as UnitDetails<Unit>[]).map(
+              (unit) => (
+                <TableRow
+                  key={unit.equipmentOptions}
+                  sx={{
+                    "&:last-child td, &:last-child th": {
+                      border: 0,
+                    },
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {unit.unit}
+                  </TableCell>
+                  <TableCell align="right">{unit.unitSize}</TableCell>
+                  <TableCell align="right">{unit.equipmentOptions}</TableCell>
+                  <TableCell align="right">{`${unit.armour.melee}(${unit.armour.shooting})`}</TableCell>
+                  <TableCell align="right">{`${unit.aggression.melee}(${unit.aggression.shooting})`}</TableCell>
+                  <TableCell align="right" width={250}>
+                    {unit.specialRules.join(", ")}
+                  </TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>

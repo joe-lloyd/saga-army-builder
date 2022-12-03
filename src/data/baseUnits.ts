@@ -111,9 +111,9 @@ const createLieutenant = (
     specialRules: ["Determination", "Presence", "Resilience(1)"],
     cost: {
       units: {
-        creature: 1,
-        hearthguards: 2,
-        warriors: 4,
+        Creature: 1,
+        Hearthguards: 2,
+        Warriors: 4,
       },
     },
   };
@@ -240,9 +240,9 @@ const createCreatureWithUnits = (
     unitSize: 1,
     cost: {
       units: {
-        creature: 1,
-        hearthguards: 2,
-        warriors: 4,
+        Creature: 1,
+        Hearthguards: 2,
+        Warriors: 4,
       },
     },
   };

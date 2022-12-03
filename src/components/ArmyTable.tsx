@@ -11,12 +11,14 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import React from "react";
 import { Unit, UnitDetails } from "../ArmyUnitTypes";
 import { PointsContext } from "../contexts/pointsContext";
-import { checkUnitViability } from "../helpers/checkUnitViability";
+import { checkUnitViabilityPoints } from "../helpers/checkUnitViabilityPoints";
 import { ErrorContext } from "../contexts/errorContext";
 import { SuccessContext } from "../contexts/successContext";
 import { UnitContext } from "../contexts/unitContext";
+import { UnitCostDialog } from "./UnitCostDialog";
 
 const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
+  const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState(false);
   const { spendPoints, receivePoints, currentPoints } =
     React.useContext(PointsContext);
   const {
@@ -27,8 +29,8 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
   const { setError } = React.useContext(ErrorContext);
   const { setSuccess } = React.useContext(SuccessContext);
 
-  const handleAddUnit = (unit: UnitDetails<Unit>) => {
-    const isUnitViable = checkUnitViability(unit, currentUnits, currentPoints);
+  const handleAddUnitPoints = (unit: UnitDetails<Unit>) => {
+    const isUnitViable = checkUnitViabilityPoints(unit, currentUnits, currentPoints);
     if (typeof isUnitViable === "string") {
       setError(isUnitViable);
       setSuccess("");
@@ -40,10 +42,22 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
     }
   };
 
+  const handleOpenUnitDialog = () => {
+    setOpenUnitCostDialog(true);
+  };
+
   const handleRemoveUnit = (unit: UnitDetails<Unit>) => {
     receivePoints(unit.cost.points || 0);
     removeUnit(unit);
+    setSuccess(`${unit.unit} ${unit.equipmentOptions} removed`);
   };
+
+  const unitExists = (unit: UnitDetails<Unit>) =>
+    currentUnits.some(
+      (currentUnit) =>
+        currentUnit.unit === unit.unit &&
+        currentUnit.equipmentOptions === unit.equipmentOptions
+    );
 
   return (
     <TableContainer component={Paper}>
@@ -76,18 +90,37 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                 {unit.specialRules.join(", ")}
               </TableCell>
               <TableCell align="right">
-                <IconButton
-                  aria-label="delete"
-                  onClick={() => handleAddUnit(unit)}
-                >
-                  <AddIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="delete"
-                  onClick={() => handleRemoveUnit(unit)}
-                >
-                  <RemoveIcon />
-                </IconButton>
+                {!!unit.cost.units && (
+                  <>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => handleOpenUnitDialog()}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <UnitCostDialog
+                      unit={unit}
+                      setOpen={setOpenUnitCostDialog}
+                      open={openUnitCostDialog}
+                    />
+                  </>
+                )}
+                {typeof unit.cost.points === "number" && (
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleAddUnitPoints(unit)}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                )}
+                {unitExists(unit) && (
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => handleRemoveUnit(unit)}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                )}
               </TableCell>
             </TableRow>
           ))}
