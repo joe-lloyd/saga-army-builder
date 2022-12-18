@@ -25,7 +25,7 @@ const units = [
 ] as const;
 
 interface UnitsToSpend {
-  Creature: number;
+  Creatures: number;
   Hearthguards: number;
   Warriors: number;
   Levies?: number;
@@ -49,7 +49,8 @@ interface UnitDetails<T> {
   };
   unitSize: number;
   rules?: {[key: string]: (units: UnitDetails<Unit>[]) => boolean};
-  unitPaidFor?: typeof units[number],
+  unitPaidFor?: number,
+  costId?: number,
 }
 
 type Unit = typeof units[number];

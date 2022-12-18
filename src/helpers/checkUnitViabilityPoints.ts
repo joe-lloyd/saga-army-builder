@@ -27,7 +27,7 @@ const checkUnitCanBeBoughtWithUnitToTrade = (
   const costWithUnit = (unit.cost.units as UnitsToSpend)[unitToTradeName];
 
   if (typeof costWithUnit === "undefined") {
-    return errorMessages.costOfUnitUndefined;
+    return `unit ${unit.unit}: ${errorMessages.costOfUnitUndefined}`;
   }
 
   if (unitToTrade.unitSize < costWithUnit) {
@@ -36,6 +36,16 @@ const checkUnitCanBeBoughtWithUnitToTrade = (
 
   return true;
 };
+
+const checkUnitCanBeBoughtWithAnyUnitInCurrentArmy = (
+  unit: UnitDetails<Unit>,
+  unitsToTrade: UnitDetails<Unit>[]
+): boolean =>
+  unitsToTrade.some((unitToTrade) =>
+    Object.keys(unit.cost.units as UnitsToSpend).find(
+      (unitName) => unitName === unitToTrade.unit
+    )
+  );
 
 const checkUnitIsWithinPriceRange = (
   unit: UnitDetails<Unit>,
@@ -84,4 +94,8 @@ const checkUnitViabilityUnits = (
   return viabilityResult;
 };
 
-export { checkUnitViabilityPoints, checkUnitViabilityUnits };
+export {
+  checkUnitViabilityPoints,
+  checkUnitViabilityUnits,
+  checkUnitCanBeBoughtWithAnyUnitInCurrentArmy,
+};

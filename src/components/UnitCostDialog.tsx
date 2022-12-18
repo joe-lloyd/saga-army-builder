@@ -39,12 +39,13 @@ const UnitCostDialog: React.FC<UnitCostDialogInterface> = ({
       setError(isUnitViable);
       setSuccess("");
     } else {
-      addUnit(unit);
+      const timestamp = Date.now();
+      addUnit({ ...unit, costId: timestamp });
       addUnit({
         ...unitToTrade,
         // @ts-ignore
         unitSize: -unit.cost.units[unitToTrade.unit],
-        unitPaidFor: unit.unit,
+        unitPaidFor: timestamp,
       });
       setSuccess(`${unit.unit} ${unit.equipmentOptions} added`);
       setError("");

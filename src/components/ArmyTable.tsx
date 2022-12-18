@@ -11,7 +11,10 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import React from "react";
 import { Unit, UnitDetails } from "../ArmyUnitTypes";
 import { PointsContext } from "../contexts/pointsContext";
-import { checkUnitViabilityPoints } from "../helpers/checkUnitViabilityPoints";
+import {
+  checkUnitCanBeBoughtWithAnyUnitInCurrentArmy,
+  checkUnitViabilityPoints,
+} from "../helpers/checkUnitViabilityPoints";
 import { ErrorContext } from "../contexts/errorContext";
 import { SuccessContext } from "../contexts/successContext";
 import { UnitContext } from "../contexts/unitContext";
@@ -30,7 +33,11 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
   const { setSuccess } = React.useContext(SuccessContext);
 
   const handleAddUnitPoints = (unit: UnitDetails<Unit>) => {
-    const isUnitViable = checkUnitViabilityPoints(unit, currentUnits, currentPoints);
+    const isUnitViable = checkUnitViabilityPoints(
+      unit,
+      currentUnits,
+      currentPoints
+    );
     if (typeof isUnitViable === "string") {
       setError(isUnitViable);
       setSuccess("");
@@ -42,9 +49,24 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
     }
   };
 
-  const handleRemoveUnit = (unit: UnitDetails<Unit>) => {
+  const handleRemoveUnitPoints = (unit: UnitDetails<Unit>) => {
     receivePoints(unit.cost.points || 0);
     removeUnit(unit);
+    setSuccess(`${unit.unit} ${unit.equipmentOptions} removed`);
+  };
+
+  const handleRemoveUnitUnits = (unit: UnitDetails<Unit>) => {
+    const thisUnitInYourUnitsList = currentUnits.find(
+      (currentUnit) => currentUnit.unit === unit.unit
+    ) as UnitDetails<Unit>;
+    const unitYouUsedToPayFor = currentUnits.find(
+      (currentUnit) =>
+        currentUnit.unitPaidFor === thisUnitInYourUnitsList.costId
+    ) as UnitDetails<Unit>;
+
+    removeUnit(unit);
+    removeUnit(unitYouUsedToPayFor);
+
     setSuccess(`${unit.unit} ${unit.equipmentOptions} removed`);
   };
 
@@ -85,22 +107,26 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
               <TableCell align="right" width={250}>
                 {unit.specialRules.join(", ")}
               </TableCell>
-              <TableCell align="right">
-                {!!unit.cost.units && (
-                  <>
-                    <IconButton
-                      aria-label="delete"
-                      onClick={() => setOpenUnitCostDialog(true)}
-                    >
-                      <AddIcon />
-                    </IconButton>
-                    <UnitCostDialog
-                      unit={unit}
-                      setOpen={setOpenUnitCostDialog}
-                      open={openUnitCostDialog}
-                    />
-                  </>
-                )}
+              <TableCell align="right" width={80}>
+                {!!unit.cost.units &&
+                  checkUnitCanBeBoughtWithAnyUnitInCurrentArmy(
+                    unit,
+                    currentUnits
+                  ) && (
+                    <>
+                      <IconButton
+                        aria-label="delete"
+                        onClick={() => setOpenUnitCostDialog(true)}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                      <UnitCostDialog
+                        unit={unit}
+                        setOpen={setOpenUnitCostDialog}
+                        open={openUnitCostDialog}
+                      />
+                    </>
+                  )}
                 {typeof unit.cost.points === "number" && (
                   <IconButton
                     aria-label="delete"
@@ -112,7 +138,11 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                 {unitExists(unit) && (
                   <IconButton
                     aria-label="delete"
-                    onClick={() => handleRemoveUnit(unit)}
+                    onClick={
+                      "points" in unit.cost
+                        ? () => handleRemoveUnitPoints(unit)
+                        : () => handleRemoveUnitUnits(unit)
+                    }
                   >
                     <RemoveIcon />
                   </IconButton>

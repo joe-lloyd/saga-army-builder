@@ -111,7 +111,7 @@ const createLieutenant = (
     specialRules: ["Determination", "Presence", "Resilience(1)"],
     cost: {
       units: {
-        Creature: 1,
+        Creatures: 1,
         Hearthguards: 2,
         Warriors: 4,
       },
@@ -208,7 +208,7 @@ const createCreatures = (
   ];
   const flyersSpecialRules = bipedSpecialRules;
   return {
-    unit: "Monsters",
+    unit: "Creatures",
     unitSize: 2,
     equipmentOptions,
     armour: {
@@ -240,7 +240,7 @@ const createCreatureWithUnits = (
     unitSize: 1,
     cost: {
       units: {
-        Creature: 1,
+        Creatures: 1,
         Hearthguards: 2,
         Warriors: 4,
       },

@@ -46,9 +46,14 @@ const unitReducer = (
     case unitActions.REMOVE_UNIT: {
       const unitsInitialCopy = [...state.units];
       const indexOfUnitToRemove = unitsInitialCopy.findIndex(
-        ({ unit, equipmentOptions }) =>
-          (payload as UnitDetails<Unit>).unit === unit &&
-          (payload as UnitDetails<Unit>).equipmentOptions === equipmentOptions
+        ({ unit, equipmentOptions, unitPaidFor }) => {
+          if ('unitPaidFor' in (payload as UnitDetails<Unit>)) {
+            return (payload as UnitDetails<Unit>).unitPaidFor === unitPaidFor;
+          }
+
+          return (payload as UnitDetails<Unit>).unit === unit &&
+            (payload as UnitDetails<Unit>).equipmentOptions === equipmentOptions;
+        }
       );
 
       delete unitsInitialCopy[indexOfUnitToRemove];
