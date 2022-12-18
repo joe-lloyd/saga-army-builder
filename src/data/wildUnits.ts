@@ -1,4 +1,4 @@
-import { ArmyInterface, Unit, UnitDetails } from '../ArmyUnitTypes';
+import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
   createCreatures,
   createCreatureWithUnits,
@@ -16,9 +16,20 @@ const createRanger = (equipmentOptions: "None" | "Bow") => {
 
   return {
     ...ranger,
-    specialRules: [...ranger.specialRules, "Ranger"]
-  }
-}
+    specialRules: [...ranger.specialRules, "Ranger"],
+  };
+};
+
+const createWildMonster = (
+  equipmentOptions: "Behemoth" | "Titan" | "ScourgeFlight"
+) => {
+  const monster = createMonster(equipmentOptions);
+
+  return {
+    ...monster,
+    rules: { onlyTwoMonsters: rules.onlyTwoMonsters },
+  };
+};
 
 const createSwarm = (): UnitDetails<Unit> => {
   return {
@@ -39,9 +50,23 @@ const createSwarm = (): UnitDetails<Unit> => {
         Levies: 12,
       },
     },
+    rules: { onlyOneSwarm: rules.onlyOneSwarm },
   };
 };
 
+const rules = {
+  onlyOneSwarm: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Swarm";
+    });
+  },
+  onlyTwoMonsters: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "Monsters";
+    });
+    return 2 <= length;
+  },
+};
 
 const wildUnits: ArmyInterface = {
   name: "Wild",
@@ -68,9 +93,9 @@ const wildUnits: ArmyInterface = {
     {
       unitName: "Monsters",
       variants: [
-        createMonster("Behemoth"),
-        createMonster("Titan"),
-        createMonster("ScourgeFlight"),
+        createWildMonster("Behemoth"),
+        createWildMonster("Titan"),
+        createWildMonster("ScourgeFlight"),
       ],
     },
     {
@@ -105,15 +130,11 @@ const wildUnits: ArmyInterface = {
     },
     {
       unitName: "Levies",
-      variants: [
-        createLevies("Javelins"),
-      ],
+      variants: [createLevies("Javelins")],
     },
     {
       unitName: "Swarm",
-      variants: [
-        createSwarm(),
-      ],
+      variants: [createSwarm()],
     },
   ],
 };

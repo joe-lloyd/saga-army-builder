@@ -7,6 +7,7 @@ const checkUnitPassesRules = (
 ): string | boolean => {
   const rules = unit.rules || {};
   let error = "";
+
   Object.entries(rules).forEach(([ruleName, rule]) => {
     if (rule(units)) {
       // @ts-ignore

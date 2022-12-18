@@ -78,6 +78,7 @@ const createWarlord = (
     cost: {
       points: 0,
     },
+    rules: { onlyOneWarlord: rules.onlyOneWarlord },
   };
 };
 
@@ -430,6 +431,14 @@ const createWarMachine = (
       points: 1,
     },
   };
+};
+
+const rules = {
+  onlyOneWarlord: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Warlord";
+    });
+  },
 };
 
 export {

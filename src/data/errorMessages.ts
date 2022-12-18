@@ -5,6 +5,9 @@ enum ErrorMessages {
   onlyOne = "onlyOne",
   onlyOneMonster = "onlyOneMonster",
   onlyOneWarlordOrNecromancer = "onlyOneWarlordOrNecromancer",
+  onlyOneWarlord = "onlyOneWarlord",
+  onlyOneSwarm = "onlyOneSwarm",
+  onlyTwoMonsters = "onlyTwoMonsters",
 }
 
 const errorMessages: { [key in ErrorMessages]: string } = {
@@ -14,6 +17,9 @@ const errorMessages: { [key in ErrorMessages]: string } = {
   onlyOne: "You may only have one of that",
   onlyOneMonster: "You may only have one Monster",
   onlyOneWarlordOrNecromancer: "You may only have one Warlord or Necromancer",
+  onlyOneWarlord: "You may only have one Warlord",
+  onlyOneSwarm: "You may only have one Swarm",
+  onlyTwoMonsters: "You may only have upto 2 monsters",
 };
 
 export { errorMessages, ErrorMessages };
