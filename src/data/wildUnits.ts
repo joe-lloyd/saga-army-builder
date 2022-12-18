@@ -1,4 +1,4 @@
-import { ArmyInterface } from "../ArmyUnitTypes";
+import { ArmyInterface, Unit, UnitDetails } from '../ArmyUnitTypes';
 import {
   createCreatures,
   createCreatureWithUnits,
@@ -10,6 +10,38 @@ import {
   createWarlord,
   createWarriors,
 } from "./baseUnits";
+
+const createRanger = (equipmentOptions: "None" | "Bow") => {
+  const ranger = createLieutenant(equipmentOptions);
+
+  return {
+    ...ranger,
+    specialRules: [...ranger.specialRules, "Ranger"]
+  }
+}
+
+const createSwarm = (): UnitDetails<Unit> => {
+  return {
+    unit: "Swarm",
+    unitSize: 12,
+    equipmentOptions: "None",
+    armour: {
+      melee: 4,
+      shooting: 3,
+    },
+    aggression: {
+      melee: 0.5,
+      shooting: 0,
+    },
+    specialRules: ["Insignificant", "Primitive", "Tiny"],
+    cost: {
+      units: {
+        Levies: 12,
+      },
+    },
+  };
+};
+
 
 const wildUnits: ArmyInterface = {
   name: "Wild",
@@ -27,7 +59,7 @@ const wildUnits: ArmyInterface = {
     },
     {
       unitName: "Lieutenant",
-      variants: [createLieutenant("None"), createLieutenant("Bow")],
+      variants: [createRanger("None"), createRanger("Bow")],
     },
     {
       unitName: "Sorcerer",
@@ -75,7 +107,12 @@ const wildUnits: ArmyInterface = {
       unitName: "Levies",
       variants: [
         createLevies("Javelins"),
-        // createLevies("Swarm"),
+      ],
+    },
+    {
+      unitName: "Swarm",
+      variants: [
+        createSwarm(),
       ],
     },
   ],

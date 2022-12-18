@@ -25,12 +25,15 @@ const units = [
 
   // kingdoms
   "Paladin",
+
+  // wild
+  "Swarm",
 ] as const;
 
 interface UnitsToSpend {
   Creatures?: number;
-  Hearthguards: number;
-  Warriors: number;
+  Hearthguards?: number;
+  Warriors?: number;
   Levies?: number;
 }
 
