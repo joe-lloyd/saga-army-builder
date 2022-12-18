@@ -81,6 +81,10 @@ const createMindless = (): UnitDetails<Unit> => {
     cost: {
       points: 1,
     },
+    rules: {
+      onlyHalfOfYourPointsCanBeSpentOnMindless:
+        rules.onlyHalfOfYourPointsCanBeSpentOnMindless,
+    },
   };
 };
 
@@ -122,6 +126,23 @@ const rules = {
     return units.some(
       ({ unit }) => unit === "Warlord" || unit === "Necromancer"
     );
+  },
+  onlyHalfOfYourPointsCanBeSpentOnMindless: (
+    units: UnitDetails<Unit>[]
+  ): boolean => {
+    // since cost of mindless is 1 then we can use length here.
+    const pointsSpentOnMindless = units.filter(
+      ({ unit }) => unit === "Mindless"
+    ).length;
+
+    const pointsSpentOnArmy = units
+      .reduce((acc, unit) => {
+        if (typeof unit.cost.points === "number") {
+          return acc + unit.cost.points;
+        }
+        return acc;
+      }, 0);
+    return Math.floor((pointsSpentOnArmy + 1) / 2) <= pointsSpentOnMindless;
   },
 };
 
