@@ -105,9 +105,9 @@ const createWarlordWithUndeadRules = (
 const createMonsterWithUndeadRules = (
   equipmentOptions: "Behemoth" | "Titan" | "ScourgeFlight"
 ): UnitDetails<Unit> => {
-  const warlord = createMonster(equipmentOptions);
+  const monster = createMonster(equipmentOptions);
   return {
-    ...warlord,
+    ...monster,
     rules: { onlyOneMonster: rules.onlyOneMonster },
   };
 };

@@ -22,10 +22,13 @@ const units = [
   // undead
   "Necromancer",
   "Mindless",
+
+  // kingdoms
+  "Paladin",
 ] as const;
 
 interface UnitsToSpend {
-  Creatures: number;
+  Creatures?: number;
   Hearthguards: number;
   Warriors: number;
   Levies?: number;
