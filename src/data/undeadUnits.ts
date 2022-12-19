@@ -144,14 +144,14 @@ const rules = {
       ({ unit }) => unit === "Mindless"
     ).length;
 
-    const pointsSpentOnArmy = units.filter(
-      ({ unit }) => unit !== "Mindless"
-    ).reduce((acc, unit) => {
-      if (typeof unit.cost.points === "number") {
-        return acc + unit.cost.points;
-      }
-      return acc;
-    }, 0);
+    const pointsSpentOnArmy = units
+      .filter(({ unit }) => unit !== "Mindless")
+      .reduce((acc, unit) => {
+        if (typeof unit.cost.points === "number") {
+          return acc + unit.cost.points;
+        }
+        return acc;
+      }, 0);
     return pointsSpentOnArmy <= pointsSpentOnMindless;
   },
 };

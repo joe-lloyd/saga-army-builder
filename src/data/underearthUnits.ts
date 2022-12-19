@@ -1,7 +1,7 @@
-import { ArmyInterface } from "../ArmyUnitTypes";
+import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
+  baseOrSharedRules,
   createCreatures,
-  createCreatureWithUnits,
   createHearthguards,
   createLevies,
   createLieutenant,
@@ -11,6 +11,84 @@ import {
   createWarMachine,
   createWarriors,
 } from "./baseUnits";
+
+const createUnderearthMonster = (
+  equipmentOptions: "Behemoth" | "Titan" | "ScourgeFlight"
+): UnitDetails<Unit> => {
+  const monster = createMonster(equipmentOptions);
+  return {
+    ...monster,
+    rules: { onlyOneMonster: baseOrSharedRules.onlyOneMonster },
+  };
+};
+
+const createUnderearthCreature = (
+  equipmentOptions: "Biped" | "Quadruped"
+): UnitDetails<Unit> => {
+  const creature = createCreatures(equipmentOptions);
+  return {
+    ...creature,
+    rules: { onlyOneUnitOfCreatures: baseOrSharedRules.onlyOneUnitOfCreatures },
+  };
+};
+
+const createUnderearthWarMachine = (
+  equipmentOptions: "Static" | "Mobile" | "Flying"
+): UnitDetails<Unit> => {
+  const warMachine = createWarMachine(equipmentOptions);
+  return {
+    ...warMachine,
+    rules: { onlyTwoWarMachines: rules.onlyTwoWarMachines },
+  };
+};
+
+const createWarriorsWithFirearms = () => {
+  const warriors = createWarriors("Crossbow");
+  return {
+    ...warriors,
+    equipmentOptions: "Firearm",
+  };
+};
+
+const createDestructionTeam = (): UnitDetails<Unit> => {
+  return {
+    unit: "Destruction Team",
+    unitSize: 1,
+    equipmentOptions: "None",
+    armour: {
+      melee: 3,
+      shooting: 4,
+    },
+    aggression: {
+      melee: 1,
+      shooting: 3,
+    },
+    specialRules: ["Firearms", "Resilience(1)", "Unstable and Dangerous"],
+    cost: {
+      units: {
+        Warriors: 2,
+      },
+    },
+    rules: {
+      onlyTwoDestructionTeams: rules.onlyTwoDestructionTeams,
+    },
+  };
+};
+
+const rules = {
+  onlyTwoWarMachines: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "War Machines";
+    });
+    return 2 <= length;
+  },
+  onlyTwoDestructionTeams: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "Destruction Team";
+    });
+    return 2 <= length;
+  },
+};
 
 const underearthUnits: ArmyInterface = {
   name: "Underearth",
@@ -34,18 +112,16 @@ const underearthUnits: ArmyInterface = {
     {
       unitName: "Monsters",
       variants: [
-        createMonster("Behemoth"),
-        createMonster("Titan"),
-        createMonster("ScourgeFlight"),
+        createUnderearthMonster("Behemoth"),
+        createUnderearthMonster("Titan"),
+        createUnderearthMonster("ScourgeFlight"),
       ],
     },
     {
       unitName: "Creatures",
       variants: [
-        createCreatures("Biped"),
-        createCreatureWithUnits("Biped"),
-        createCreatures("Quadruped"),
-        createCreatureWithUnits("Quadruped"),
+        createUnderearthCreature("Biped"),
+        createUnderearthCreature("Quadruped"),
       ],
     },
     {
@@ -62,7 +138,7 @@ const underearthUnits: ArmyInterface = {
         createWarriors("None"),
         createWarriors("HeavyWeapon"),
         createWarriors("Crossbow"),
-        // createWarriors("Firearm"),
+        createWarriorsWithFirearms(),
       ],
     },
     {
@@ -72,17 +148,15 @@ const underearthUnits: ArmyInterface = {
     {
       unitName: "War Machines",
       variants: [
-        createWarMachine("Static"),
-        createWarMachine("Mobile"),
-        createWarMachine("Flying"),
+        createUnderearthWarMachine("Static"),
+        createUnderearthWarMachine("Mobile"),
+        createUnderearthWarMachine("Flying"),
       ],
     },
-    // {
-    //   unitName: "Destruction Team",
-    //   variants: [
-    //     createDestructionTeam("None"),
-    //   ],
-    // },
+    {
+      unitName: "Destruction Team",
+      variants: [createDestructionTeam()],
+    },
   ],
 };
 

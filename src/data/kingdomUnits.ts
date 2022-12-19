@@ -1,5 +1,6 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
+  baseOrSharedRules,
   createCreatures,
   createHearthguards,
   createLevies,
@@ -126,16 +127,8 @@ const createKingdomsCreature = (
   const creature = createCreatures(equipmentOptions);
   return {
     ...creature,
-    rules: { onlyOneUnitOfCreatures: rules.onlyOneUnitOfCreatures },
+    rules: { onlyOneUnitOfCreatures: baseOrSharedRules.onlyOneUnitOfCreatures },
   };
-};
-
-const rules = {
-  onlyOneUnitOfCreatures: (units: UnitDetails<Unit>[]): boolean => {
-    return units.some(({ unit }) => {
-      return unit === "Creatures";
-    });
-  },
 };
 
 const kingdomUnits: ArmyInterface = {

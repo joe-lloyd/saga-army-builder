@@ -453,6 +453,11 @@ const baseOrSharedRules = {
       return unit === "Monsters";
     });
   },
+  onlyOneUnitOfCreatures: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Creatures";
+    });
+  },
 };
 
 export {

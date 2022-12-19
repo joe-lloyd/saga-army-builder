@@ -34,6 +34,9 @@ const units = [
 
   // otherworld
   "Hunters",
+
+  // underearth
+  "Destruction Team",
 ] as const;
 
 interface UnitsToSpend {
