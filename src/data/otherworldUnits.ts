@@ -1,7 +1,6 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
   createCreatures,
-  createCreatureWithUnits,
   createHearthguards,
   createLieutenant,
   createMonster,
@@ -40,18 +39,52 @@ const createHunters = (): UnitDetails<Unit> => {
     },
     rules: {
       onlyHalfOfYourWarriorsCanBeHunters:
-      rules.onlyHalfOfYourWarriorsCanBeHunters,
+        rules.onlyHalfOfYourWarriorsCanBeHunters,
     },
-  }
-}
+  };
+};
+
+const createOtherworldMonster = (
+  equipmentOptions: "Behemoth" | "ScourgeFlight"
+) => {
+  const creatures = createMonster(equipmentOptions);
+
+  return {
+    ...creatures,
+    rules: { onlyThreeMonsters: rules.onlyThreeMonsters },
+  };
+};
+
+const createOtherworldCreatures = (
+  equipmentOptions: "Biped" | "Quadruped" | "Flyers"
+) => {
+  const creatures = createCreatures(equipmentOptions);
+
+  return {
+    ...creatures,
+    rules: { onlyTwoCreatures: rules.onlyTwoCreatures },
+  };
+};
 
 const rules = {
-  onlyHalfOfYourWarriorsCanBeHunters: (units: UnitDetails<Unit>[]):boolean => {
+  onlyHalfOfYourWarriorsCanBeHunters: (units: UnitDetails<Unit>[]): boolean => {
     const hunterCount = units.filter(({ unit }) => unit === "Hunters").length;
     const warriorCount = units.filter(({ unit }) => unit === "Warriors").length;
     return warriorCount <= hunterCount;
   },
-}
+  onlyThreeMonsters: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "Monsters";
+    });
+    return 3 <= length;
+  },
+  onlyTwoCreatures: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "Creatures";
+    });
+    return 2 <= length;
+  },
+};
 
 const otherworldUnits: ArmyInterface = {
   name: "Otherworld",
@@ -68,31 +101,25 @@ const otherworldUnits: ArmyInterface = {
     },
     {
       unitName: "Lieutenant",
-      variants: [
-        createLieutenant("None"),
-        addWings(createLieutenant("None")),
-      ],
+      variants: [createLieutenant("None"), addWings(createLieutenant("None"))],
     },
     {
       unitName: "Sorcerer",
-      variants: [
-        createSorcerer("None"),
-        addWings(createSorcerer("None")),
-      ],
+      variants: [createSorcerer("None"), addWings(createSorcerer("None"))],
     },
     {
       unitName: "Monsters",
-      variants: [createMonster("Behemoth"), createMonster("ScourgeFlight")],
+      variants: [
+        createOtherworldMonster("Behemoth"),
+        createOtherworldMonster("ScourgeFlight"),
+      ],
     },
     {
       unitName: "Creatures",
       variants: [
-        createCreatures("Biped"),
-        createCreatureWithUnits("Biped"),
-        createCreatures("Quadruped"),
-        createCreatureWithUnits("Quadruped"),
-        createCreatures("Flyers"),
-        createCreatureWithUnits("Flyers"),
+        createOtherworldCreatures("Biped"),
+        createOtherworldCreatures("Quadruped"),
+        createOtherworldCreatures("Flyers"),
       ],
     },
     {
@@ -113,9 +140,7 @@ const otherworldUnits: ArmyInterface = {
     },
     {
       unitName: "Hunters",
-      variants: [
-        createHunters(),
-      ],
+      variants: [createHunters()],
     },
   ],
 };
