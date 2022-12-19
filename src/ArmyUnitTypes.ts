@@ -28,6 +28,9 @@ const units = [
 
   // wild
   "Swarm",
+
+  // horde
+  "WarChariot"
 ] as const;
 
 interface UnitsToSpend {

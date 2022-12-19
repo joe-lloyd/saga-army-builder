@@ -1,5 +1,6 @@
-import { ArmyInterface } from "../ArmyUnitTypes";
+import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
+  baseOrSharedRules,
   createCreatures,
   createCreatureWithUnits,
   createHearthguards,
@@ -11,6 +12,65 @@ import {
   createWarMachine,
   createWarriors,
 } from "./baseUnits";
+
+const createHordeMonster = (
+  equipmentOptions: "Behemoth" | "Titan" | "ScourgeFlight"
+): UnitDetails<Unit> => {
+  const monster = createMonster(equipmentOptions);
+  return {
+    ...monster,
+    rules: { onlyOneMonster: baseOrSharedRules.onlyOneMonster },
+  };
+};
+
+const createChampion = (
+  equipmentOptions: "None" | "HeavyWeapon" | "MountAnimal"
+): UnitDetails<Unit> => {
+  const champion = createLieutenant(equipmentOptions);
+
+  return {
+    ...champion,
+    specialRules: [...champion.specialRules, "Pride"],
+  };
+};
+
+const createWarChariot = (): UnitDetails<Unit> => {
+  return {
+    unit: "WarChariot",
+    unitSize: 1,
+    equipmentOptions: "Javelins",
+    armour: {
+      melee: 5,
+      shooting: 5,
+    },
+    aggression: {
+      melee: 4,
+      shooting: 2,
+    },
+    specialRules: [
+      "Devastating Charge",
+      "Javelins",
+      "MountAnimal",
+      "Presence",
+      "Resilience(1)",
+    ],
+    cost: {
+      points: 1,
+    },
+    rules: {
+      onlyTwoWarChariots: rules.onlyTwoWarChariots,
+    },
+  };
+};
+
+const rules = {
+  onlyTwoWarChariots: (units: UnitDetails<Unit>[]): boolean => {
+    const { length } = units.filter(({ unit }) => {
+      return unit === "WarChariot";
+    });
+    return 2 <= length;
+  },
+};
 
 const hordeUnits: ArmyInterface = {
   name: "Horde",
@@ -27,15 +87,15 @@ const hordeUnits: ArmyInterface = {
     {
       unitName: "Lieutenant",
       variants: [
-        createLieutenant("None"),
-        createLieutenant("HeavyWeapon"),
-        createLieutenant("MountAnimal"),
+        createChampion("None"),
+        createChampion("HeavyWeapon"),
+        createChampion("MountAnimal"),
       ],
     },
-    // {
-    //   unitName: "WarChariot",
-    //   variants: [createWarChariot("Javelins")],
-    // },
+    {
+      unitName: "WarChariot",
+      variants: [createWarChariot()],
+    },
     {
       unitName: "Sorcerer",
       variants: [createSorcerer("None"), createSorcerer("MountAnimal")],
@@ -43,9 +103,9 @@ const hordeUnits: ArmyInterface = {
     {
       unitName: "Monsters",
       variants: [
-        createMonster("Behemoth"),
-        createMonster("Titan"),
-        createMonster("ScourgeFlight"),
+        createHordeMonster("Behemoth"),
+        createHordeMonster("Titan"),
+        createHordeMonster("ScourgeFlight"),
       ],
     },
     {

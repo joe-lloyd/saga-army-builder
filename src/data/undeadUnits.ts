@@ -1,5 +1,6 @@
 import { ArmyInterface, UnitDetails, Unit } from "../ArmyUnitTypes";
 import {
+  baseOrSharedRules,
   createCreatures,
   createCreatureWithUnits,
   createHearthguards,
@@ -112,16 +113,24 @@ const createMonsterWithUndeadRules = (
   const monster = createMonster(equipmentOptions);
   return {
     ...monster,
-    rules: { onlyOneMonster: rules.onlyOneMonster },
+    rules: { onlyOneMonster: baseOrSharedRules.onlyOneMonster },
+  };
+};
+
+const createUndeadWarMachine = (): UnitDetails<Unit> => {
+  const warMachine = createWarMachine("Static");
+
+  return {
+    ...warMachine,
+    cost: {
+      units: {
+        Warriors: 4,
+      },
+    },
   };
 };
 
 const rules = {
-  onlyOneMonster: (units: UnitDetails<Unit>[]): boolean => {
-    return units.some(({ unit }) => {
-      return unit === "Monsters";
-    });
-  },
   onlyOneWarlordOrNecromancer: (units: UnitDetails<Unit>[]): boolean => {
     return units.some(
       ({ unit }) => unit === "Warlord" || unit === "Necromancer"
@@ -135,13 +144,12 @@ const rules = {
       ({ unit }) => unit === "Mindless"
     ).length;
 
-    const pointsSpentOnArmy = units
-      .reduce((acc, unit) => {
-        if (typeof unit.cost.points === "number") {
-          return acc + unit.cost.points;
-        }
-        return acc;
-      }, 0);
+    const pointsSpentOnArmy = units.reduce((acc, unit) => {
+      if (typeof unit.cost.points === "number") {
+        return acc + unit.cost.points;
+      }
+      return acc;
+    }, 0);
     return Math.floor((pointsSpentOnArmy + 1) / 2) <= pointsSpentOnMindless;
   },
 };
@@ -212,7 +220,7 @@ const undeadUnits: ArmyInterface = {
     },
     {
       unitName: "War Machines",
-      variants: [createWarMachine("Static")],
+      variants: [createUndeadWarMachine()],
     },
   ],
 };

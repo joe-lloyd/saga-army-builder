@@ -78,7 +78,7 @@ const createWarlord = (
     cost: {
       points: 0,
     },
-    rules: { onlyOneWarlord: rules.onlyOneWarlord },
+    rules: { onlyOneWarlord: baseOrSharedRules.onlyOneWarlord },
   };
 };
 
@@ -428,15 +428,29 @@ const createWarMachine = (
       Flying: flyingSpecialRules,
     }[equipmentOptions],
     cost: {
-      points: 1,
+      units: {
+        Warriors: 4,
+        Levies: 6,
+      }
     },
+    rules: { onlyOneWarMachine: baseOrSharedRules.onlyOneWarMachine },
   };
 };
 
-const rules = {
+const baseOrSharedRules = {
   onlyOneWarlord: (units: UnitDetails<Unit>[]): boolean => {
     return units.some(({ unit }) => {
       return unit === "Warlord";
+    });
+  },
+  onlyOneMonster: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Monsters";
+    });
+  },
+  onlyOneWarMachine: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Monsters";
     });
   },
 };
@@ -452,4 +466,5 @@ export {
   createWarriors,
   createLevies,
   createWarMachine,
+  baseOrSharedRules,
 };
