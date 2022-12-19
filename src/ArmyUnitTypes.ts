@@ -30,7 +30,10 @@ const units = [
   "Swarm",
 
   // horde
-  "WarChariot"
+  "WarChariot",
+
+  // otherworld
+  "Hunters",
 ] as const;
 
 interface UnitsToSpend {
@@ -57,9 +60,9 @@ interface UnitDetails<T> {
     units?: UnitsToSpend;
   };
   unitSize: number;
-  rules?: {[key: string]: (units: UnitDetails<Unit>[]) => boolean};
-  unitPaidFor?: number,
-  costId?: number,
+  rules?: { [key: string]: (units: UnitDetails<Unit>[]) => boolean };
+  unitPaidFor?: number;
+  costId?: number;
 }
 
 type Unit = typeof units[number];

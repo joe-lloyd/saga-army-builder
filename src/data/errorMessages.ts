@@ -11,6 +11,7 @@ enum ErrorMessages {
   onlyHalfOfYourPointsCanBeSpentOnMindless = "onlyHalfOfYourPointsCanBeSpentOnMindless",
   onlyTwoWarChariots = "onlyTwoWarChariots",
   onlyOneUnitOfCreatures = "onlyOneUnitOfCreatures",
+  onlyHalfOfYourWarriorsCanBeHunters = "onlyHalfOfYourWarriorsCanBeHunters",
 }
 
 const errorMessages: { [key in ErrorMessages]: string } = {
@@ -27,6 +28,7 @@ const errorMessages: { [key in ErrorMessages]: string } = {
     "Only half of your army (points) can be Mindless",
   onlyTwoWarChariots: "You may only have upto 2 war chariots in your army",
   onlyOneUnitOfCreatures: "You may only have one unit of creatures",
+  onlyHalfOfYourWarriorsCanBeHunters: "Only half of your warriors can be hunters"
 };
 
 export { errorMessages, ErrorMessages };

@@ -1,4 +1,4 @@
-import { ArmyInterface } from "../ArmyUnitTypes";
+import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
   createCreatures,
   createCreatureWithUnits,
@@ -10,6 +10,49 @@ import {
   createWarriors,
 } from "./baseUnits";
 
+const addWings = (baseUnit: UnitDetails<Unit>): UnitDetails<Unit> => {
+  return {
+    ...baseUnit,
+    equipmentOptions: "Winged",
+    armour: {
+      ...baseUnit.armour,
+      shooting: baseUnit.armour.shooting - 1,
+    },
+  };
+};
+
+const createHunters = (): UnitDetails<Unit> => {
+  return {
+    unit: "Hunters",
+    unitSize: 12,
+    equipmentOptions: "None",
+    armour: {
+      melee: 3,
+      shooting: 3,
+    },
+    aggression: {
+      melee: 1,
+      shooting: 0,
+    },
+    specialRules: ["Hunt", "Primitive", "Cannot close ranks"],
+    cost: {
+      points: 1,
+    },
+    rules: {
+      onlyHalfOfYourWarriorsCanBeHunters:
+      rules.onlyHalfOfYourWarriorsCanBeHunters,
+    },
+  }
+}
+
+const rules = {
+  onlyHalfOfYourWarriorsCanBeHunters: (units: UnitDetails<Unit>[]):boolean => {
+    const hunterCount = units.filter(({ unit }) => unit === "Hunters").length;
+    const warriorCount = units.filter(({ unit }) => unit === "Warriors").length;
+    return warriorCount <= hunterCount;
+  },
+}
+
 const otherworldUnits: ArmyInterface = {
   name: "Otherworld",
   units: [
@@ -18,7 +61,7 @@ const otherworldUnits: ArmyInterface = {
       variants: [
         createWarlord("None"),
         createWarlord("HeavyWeapon"),
-        // createWarlord("Winged"),
+        addWings(createWarlord("None")),
         createWarlord("MountBeast"),
         createWarlord("MountFlyingBeast"),
       ],
@@ -27,14 +70,14 @@ const otherworldUnits: ArmyInterface = {
       unitName: "Lieutenant",
       variants: [
         createLieutenant("None"),
-        // createLieutenant("Winged"),
+        addWings(createLieutenant("None")),
       ],
     },
     {
       unitName: "Sorcerer",
       variants: [
         createSorcerer("None"),
-        // createSorcerer("Winged"),
+        addWings(createSorcerer("None")),
       ],
     },
     {
@@ -57,7 +100,7 @@ const otherworldUnits: ArmyInterface = {
       variants: [
         createHearthguards("None"),
         createHearthguards("HeavyWeapon"),
-        // createHearthguards("Winged"),
+        addWings(createHearthguards("None")),
       ],
     },
     {
@@ -65,8 +108,13 @@ const otherworldUnits: ArmyInterface = {
       variants: [
         createWarriors("None"),
         createWarriors("HeavyWeapon"),
-        // createWarriors("Winged"),
-        // createWarriors("Hunters"),
+        addWings(createWarriors("None")),
+      ],
+    },
+    {
+      unitName: "Hunters",
+      variants: [
+        createHunters(),
       ],
     },
   ],

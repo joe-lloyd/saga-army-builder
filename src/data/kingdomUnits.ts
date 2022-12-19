@@ -1,8 +1,6 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
-  baseOrSharedRules,
   createCreatures,
-  createCreatureWithUnits,
   createHearthguards,
   createLevies,
   createLieutenant,
