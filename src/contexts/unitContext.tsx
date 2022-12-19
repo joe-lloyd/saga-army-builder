@@ -38,7 +38,7 @@ const UnitProvider: React.FC<any> = ({ children }) => {
     },
     resetUnits: () => {
       dispatch({ type: unitActions.RESET_UNITS });
-    }
+    },
   };
 
   return <UnitContext.Provider value={value}>{children}</UnitContext.Provider>;

@@ -31,7 +31,7 @@ const pointsReducer = (
 
   switch (type) {
     case actions.SET_INITIAL_POINTS:
-      if(typeof points !== 'number') return state;
+      if (typeof points !== "number") return state;
       addToLocalStorage(LocalstorageKeys.points, `${points}`);
       return {
         ...state,
@@ -39,9 +39,12 @@ const pointsReducer = (
         currentPoints: points,
       };
     case actions.SPEND_POINTS: {
-      if(typeof points !== 'number') return state;
+      if (typeof points !== "number") return state;
       if (state.currentPoints - points >= 0) {
-        addToLocalStorage(LocalstorageKeys.points, `${state.currentPoints - points}`);
+        addToLocalStorage(
+          LocalstorageKeys.points,
+          `${state.currentPoints - points}`
+        );
         return {
           ...state,
           currentPoints: state.currentPoints - points,
@@ -52,9 +55,12 @@ const pointsReducer = (
       };
     }
     case actions.RECEIVE_POINTS: {
-      if(typeof points !== 'number') return state;
+      if (typeof points !== "number") return state;
       if (state.currentPoints + points <= state.initialPoints) {
-        addToLocalStorage(LocalstorageKeys.points, `${state.currentPoints + points}`);
+        addToLocalStorage(
+          LocalstorageKeys.points,
+          `${state.currentPoints + points}`
+        );
         return {
           ...state,
           currentPoints: state.currentPoints + points,
@@ -63,7 +69,7 @@ const pointsReducer = (
       return { ...state };
     }
     case actions.RESET_POINTS: {
-      addToLocalStorage(LocalstorageKeys.points, 8)
+      addToLocalStorage(LocalstorageKeys.points, 8);
       return initialState;
     }
     default:

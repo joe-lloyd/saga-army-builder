@@ -3,8 +3,8 @@ import { factions, ArmyInterface } from "../ArmyUnitTypes";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
 import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
-import { PointsContext } from '../contexts/pointsContext';
-import { UnitContext } from '../contexts/unitContext';
+import { PointsContext } from "../contexts/pointsContext";
+import { UnitContext } from "../contexts/unitContext";
 
 const ArmySelector = () => {
   const { setArmy, armies, army } = React.useContext(ArmyContext);

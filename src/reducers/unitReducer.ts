@@ -37,7 +37,10 @@ const unitReducer = (
         units: payload as UnitDetails<Unit>[],
       };
     case unitActions.ADD_UNIT: {
-      addToLocalStorage(LocalstorageKeys.units, JSON.stringify([...state.units, payload]));
+      addToLocalStorage(
+        LocalstorageKeys.units,
+        JSON.stringify([...state.units, payload])
+      );
       return {
         ...state,
         units: [...state.units, payload as UnitDetails<Unit>],
@@ -47,12 +50,14 @@ const unitReducer = (
       const unitsInitialCopy = [...state.units];
       const indexOfUnitToRemove = unitsInitialCopy.findIndex(
         ({ unit, equipmentOptions, unitPaidFor }) => {
-          if ('unitPaidFor' in (payload as UnitDetails<Unit>)) {
+          if ("unitPaidFor" in (payload as UnitDetails<Unit>)) {
             return (payload as UnitDetails<Unit>).unitPaidFor === unitPaidFor;
           }
 
-          return (payload as UnitDetails<Unit>).unit === unit &&
-            (payload as UnitDetails<Unit>).equipmentOptions === equipmentOptions;
+          return (
+            (payload as UnitDetails<Unit>).unit === unit &&
+            (payload as UnitDetails<Unit>).equipmentOptions === equipmentOptions
+          );
         }
       );
 
@@ -68,7 +73,7 @@ const unitReducer = (
       };
     }
     case unitActions.RESET_UNITS: {
-      addToLocalStorage(LocalstorageKeys.units, '');
+      addToLocalStorage(LocalstorageKeys.units, "");
       return initialState;
     }
     default:

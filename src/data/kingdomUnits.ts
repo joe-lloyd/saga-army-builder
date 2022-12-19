@@ -1,5 +1,6 @@
 import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
 import {
+  baseOrSharedRules,
   createCreatures,
   createCreatureWithUnits,
   createHearthguards,
@@ -23,7 +24,10 @@ const createKingdomsWarlord = (
 ): UnitDetails<Unit> => {
   let warlord;
   if (equipmentOptions === "WingedMount") {
-    warlord = { ...createWarlord("MountAnimal"), equipmentOptions: "WingedMount" };
+    warlord = {
+      ...createWarlord("MountAnimal"),
+      equipmentOptions: "WingedMount",
+    };
   } else {
     warlord = createWarlord(equipmentOptions);
   }
@@ -36,7 +40,10 @@ const createCaptain = (
 ): UnitDetails<Unit> => {
   let lieutenant;
   if (equipmentOptions === "WingedMount") {
-    lieutenant = { ...createLieutenant("MountAnimal"), equipmentOptions: "WingedMount" };
+    lieutenant = {
+      ...createLieutenant("MountAnimal"),
+      equipmentOptions: "WingedMount",
+    };
   } else {
     lieutenant = createLieutenant(equipmentOptions);
   }
@@ -84,14 +91,14 @@ const createPaladin = (
 };
 
 const createKingdomsSorcerer = (
-  equipmentOptions:
-    | "None"
-    | "MountAnimal"
-    | "WingedMount"
+  equipmentOptions: "None" | "MountAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
   let warlord;
   if (equipmentOptions === "WingedMount") {
-    warlord = { ...createSorcerer("MountAnimal"), equipmentOptions: "WingedMount" };
+    warlord = {
+      ...createSorcerer("MountAnimal"),
+      equipmentOptions: "WingedMount",
+    };
   } else {
     warlord = createSorcerer(equipmentOptions);
   }
@@ -100,15 +107,14 @@ const createKingdomsSorcerer = (
 };
 
 const createKingdomsHearthguards = (
-  equipmentOptions:
-    | "None"
-    | "HeavyWeapon"
-    | "MountedAnimal"
-    | "WingedMount"
+  equipmentOptions: "None" | "HeavyWeapon" | "MountedAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
   let warlord;
   if (equipmentOptions === "WingedMount") {
-    warlord = { ...createHearthguards("MountedAnimal"), equipmentOptions: "WingedMount" };
+    warlord = {
+      ...createHearthguards("MountedAnimal"),
+      equipmentOptions: "WingedMount",
+    };
   } else {
     warlord = createHearthguards(equipmentOptions);
   }
@@ -116,6 +122,23 @@ const createKingdomsHearthguards = (
   return warlord;
 };
 
+const createKingdomsCreature = (
+  equipmentOptions: "Biped" | "Quadruped"
+): UnitDetails<Unit> => {
+  const creature = createCreatures(equipmentOptions);
+  return {
+    ...creature,
+    rules: { onlyOneUnitOfCreatures: rules.onlyOneUnitOfCreatures },
+  };
+};
+
+const rules = {
+  onlyOneUnitOfCreatures: (units: UnitDetails<Unit>[]): boolean => {
+    return units.some(({ unit }) => {
+      return unit === "Creatures";
+    });
+  },
+};
 
 const kingdomUnits: ArmyInterface = {
   name: "Kingdoms",
@@ -154,7 +177,7 @@ const kingdomUnits: ArmyInterface = {
       variants: [
         createKingdomsSorcerer("None"),
         createKingdomsSorcerer("MountAnimal"),
-        createKingdomsSorcerer("WingedMount")
+        createKingdomsSorcerer("WingedMount"),
       ],
     },
     {
@@ -168,10 +191,8 @@ const kingdomUnits: ArmyInterface = {
     {
       unitName: "Creatures",
       variants: [
-        createCreatures("Biped"),
-        createCreatureWithUnits("Biped"),
-        createCreatures("Quadruped"),
-        createCreatureWithUnits("Quadruped"),
+        createKingdomsCreature("Biped"),
+        createKingdomsCreature("Quadruped"),
       ],
     },
     {

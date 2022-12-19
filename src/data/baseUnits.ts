@@ -431,7 +431,7 @@ const createWarMachine = (
       units: {
         Warriors: 4,
         Levies: 6,
-      }
+      },
     },
     rules: { onlyOneWarMachine: baseOrSharedRules.onlyOneWarMachine },
   };
