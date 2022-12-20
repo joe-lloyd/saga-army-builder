@@ -44,6 +44,7 @@ const Hero = () => {
             flexDirection: "row",
             justifyContent: "center",
             alignItems: "center",
+            maxWidth: "100%",
           }}
         >
           <FormControl sx={{ m: 1, width: "20ch" }} variant="outlined">
@@ -78,7 +79,7 @@ const Hero = () => {
               disabled
             />
             <FormHelperText id="current-points-helper-text">
-              Points Remaining
+              Points left
             </FormHelperText>
           </FormControl>
           <Button
