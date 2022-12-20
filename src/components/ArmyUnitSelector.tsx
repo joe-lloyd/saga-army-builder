@@ -32,13 +32,13 @@ const ArmyUnitSelector: React.FC<{}> = () => {
         <Accordion key={`${army.name}-${unitName}`}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
+            aria-controls={`${army.name}-${unitName}-panel1a-content`}
+            id={`${army.name}-${unitName}-panel1a-header`}
           >
             <Typography>{unitName}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <ArmyTable units={variants} />
+            <ArmyTable units={variants} army={army.name} />
           </AccordionDetails>
         </Accordion>
       ))}

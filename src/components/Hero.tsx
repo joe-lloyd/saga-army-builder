@@ -48,16 +48,20 @@ const Hero = () => {
         >
           <FormControl sx={{ m: 1, width: "20ch" }} variant="outlined">
             <OutlinedInput
-              id="outlined-adornment-weight"
+              id="outlined-adornment-initial-points"
               value={initialPoints}
               onChange={(event: any) => {
                 setInitialPoints(parseInt(event.target.value) || 0);
               }}
               endAdornment={<InputAdornment position="end">pts</InputAdornment>}
-              aria-describedby="outlined-weight-helper-text"
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              aria-describedby="full-points-helper-text"
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                "aria-labelledby": "full-points-helper-text",
+              }}
             />
-            <FormHelperText id="outlined-weight-helper-text">
+            <FormHelperText id="full-points-helper-text">
               Set your points
             </FormHelperText>
           </FormControl>
@@ -66,13 +70,14 @@ const Hero = () => {
               id="points-remaining"
               value={currentPoints}
               endAdornment={<InputAdornment position="end">pts</InputAdornment>}
-              aria-describedby="outlined-weight-helper-text"
+              aria-describedby="current-points-input"
               inputProps={{
-                "aria-label": "weight",
+                "aria-label": "current-points",
+                "aria-labelledby": "current-points-helper-text",
               }}
               disabled
             />
-            <FormHelperText id="outlined-weight-helper-text">
+            <FormHelperText id="current-points-helper-text">
               Points Remaining
             </FormHelperText>
           </FormControl>

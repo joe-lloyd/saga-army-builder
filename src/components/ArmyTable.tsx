@@ -20,7 +20,10 @@ import { SuccessContext } from "../contexts/successContext";
 import { UnitContext } from "../contexts/unitContext";
 import { UnitCostDialog } from "./UnitCostDialog";
 
-const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
+const ArmyTable: React.FC<{ units: UnitDetails<Unit>[]; army: string }> = ({
+  units,
+  army,
+}) => {
   const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState(false);
   const { spendPoints, receivePoints, currentPoints } =
     React.useContext(PointsContext);
@@ -79,7 +82,7 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label={`${army}-army-table`}>
         <TableHead>
           <TableRow>
             <TableCell>Equipment&nbsp;Options</TableCell>
@@ -115,7 +118,7 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                   ) && (
                     <>
                       <IconButton
-                        aria-label="delete"
+                        aria-label={`add-${unit.unit}-with-units`}
                         onClick={() => setOpenUnitCostDialog(true)}
                       >
                         <AddIcon />
@@ -129,7 +132,7 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                   )}
                 {typeof unit.cost.points === "number" && (
                   <IconButton
-                    aria-label="delete"
+                    aria-label={`add-${unit.unit}-with-points`}
                     onClick={() => handleAddUnitPoints(unit)}
                   >
                     <AddIcon />
@@ -137,7 +140,7 @@ const ArmyTable: React.FC<{ units: UnitDetails<Unit>[] }> = ({ units }) => {
                 )}
                 {unitExists(unit) && (
                   <IconButton
-                    aria-label="delete"
+                    aria-label={`delete-${unit.unit}`}
                     onClick={
                       "points" in unit.cost
                         ? () => handleRemoveUnitPoints(unit)
