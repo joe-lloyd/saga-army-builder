@@ -214,20 +214,22 @@ const ArmyCard: React.FC<UnitsProps> = ({
       <CardActions>
         {!!unit.cost.units &&
           checkUnitCanBeBoughtWithAnyUnitInCurrentArmy(unit, currentUnits) && (
-            <Button size="small" onClick={() => setOpenUnitCostDialog(true)}>
-              Add Unit
-            </Button>
+            <>
+              <Button size="small" onClick={() => setOpenUnitCostDialog(true)}>
+                Add Unit
+              </Button>
+              <UnitCostDialog
+                unit={unit}
+                setOpen={setOpenUnitCostDialog}
+                open={openUnitCostDialog}
+              />
+            </>
           )}
         {typeof unit.cost.points === "number" && (
           <Button size="small" onClick={() => handleAddUnitPoints(unit)}>
             Add Unit
           </Button>
         )}
-        <UnitCostDialog
-          unit={unit}
-          setOpen={setOpenUnitCostDialog}
-          open={openUnitCostDialog}
-        />
         {unitExists(unit) && (
           <Button
             size="small"
