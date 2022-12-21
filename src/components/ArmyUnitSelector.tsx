@@ -1,14 +1,7 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Typography,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
-import { ArmyTable } from "./ArmyTable";
+import { ArmyViewer } from "./ArmyTable";
 
 const ArmyUnitSelector: React.FC<{}> = () => {
   const { army } = React.useContext(ArmyContext);
@@ -18,29 +11,10 @@ const ArmyUnitSelector: React.FC<{}> = () => {
   }
 
   return (
-    <Box
-      sx={{
-        my: 4,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box>
       <Typography gutterBottom>{army.name} Units</Typography>
       {(army?.units || []).map(({ unitName, variants }) => (
-        <Accordion key={`${army.name}-${unitName}`}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls={`${army.name}-${unitName}-panel1a-content`}
-            id={`${army.name}-${unitName}-panel1a-header`}
-          >
-            <Typography>{unitName}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <ArmyTable units={variants} army={army.name} />
-          </AccordionDetails>
-        </Accordion>
+        <ArmyViewer units={variants} army={army.name} unitName={unitName} />
       ))}
     </Box>
   );

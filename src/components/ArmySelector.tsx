@@ -90,7 +90,7 @@ const ArmySelectorDropdown: FC<{
 
 const ArmySelectorForScreenSize = () => {
   const theme = useTheme();
-  const isScreenSizeSmall = useMediaQuery(theme.breakpoints.up("sm"));
+  const isScreenSizeLarge = useMediaQuery(theme.breakpoints.up("sm"));
   const { setArmy, armies, army } = React.useContext(ArmyContext);
   const { resetPoints } = React.useContext(PointsContext);
   const { resetUnits } = React.useContext(UnitContext);
@@ -103,7 +103,7 @@ const ArmySelectorForScreenSize = () => {
     setArmy(armies.find(({ name }) => name === faction) as ArmyInterface);
   };
 
-  return isScreenSizeSmall ? (
+  return isScreenSizeLarge ? (
     <ArmySelectorButtonGroup handleSetArmy={handleSetArmy} />
   ) : (
     <ArmySelectorDropdown handleSetArmy={handleSetArmy} armyName={army?.name} />

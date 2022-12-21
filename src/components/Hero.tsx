@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { PointsContext } from "../contexts/pointsContext";
-import { ArmyViewer } from "./ArmyViewer";
+import { ArmyViewerForward } from "./ArmyViewer";
 
 const Hero = () => {
   const [open, setOpen] = React.useState(false);
@@ -93,12 +93,13 @@ const Hero = () => {
         </Card>
       </Box>
       <Modal
+        sx={{ overflow: "scroll", marginTop: "16px" }}
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <ArmyViewer />
+        <ArmyViewerForward setOpen={setOpen} />
       </Modal>
     </>
   );
