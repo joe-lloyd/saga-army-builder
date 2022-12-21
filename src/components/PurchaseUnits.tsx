@@ -173,9 +173,7 @@ const ArmyCard: React.FC<UnitsProps> = ({
       <CardContent>
         <Typography variant="h5" component="h2">
           {unit.unit}
-        </Typography>
-        <Typography color="textSecondary">
-          Equipment: {unit.equipmentOptions}
+          {unit.equipmentOptions === "None" ? "" : `: ${unit.equipmentOptions.split(/(?=[A-Z])/).join(" ")}`}
         </Typography>
         <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
           <TableHead>
@@ -207,9 +205,11 @@ const ArmyCard: React.FC<UnitsProps> = ({
             </TableRow>
           </TableBody>
         </Table>
-        <Typography variant="body2" component="p">
-          Special rules: {unit.specialRules.join(", ")}
-        </Typography>
+        {!!unit.specialRules.length && (
+          <Typography variant="body2" component="p">
+            Special rules: {unit.specialRules.join(", ")}
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
         {!!unit.cost.units &&
@@ -247,7 +247,7 @@ const ArmyCard: React.FC<UnitsProps> = ({
   ));
 };
 
-const ArmyViewer: React.FC<{
+const PurchaseUnits: React.FC<{
   units: UnitDetails<Unit>[];
   army: string;
   unitName: string;
@@ -339,4 +339,4 @@ const ArmyViewer: React.FC<{
   );
 };
 
-export { ArmyViewer };
+export { PurchaseUnits };

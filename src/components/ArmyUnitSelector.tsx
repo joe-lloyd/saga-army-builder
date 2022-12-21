@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { ArmyContext } from "../contexts/armyContext";
-import { ArmyViewer } from "./ArmyTable";
+import { PurchaseUnits } from "./PurchaseUnits";
 
 const ArmyUnitSelector: React.FC<{}> = () => {
   const { army } = React.useContext(ArmyContext);
@@ -14,7 +14,7 @@ const ArmyUnitSelector: React.FC<{}> = () => {
     <Box>
       <Typography gutterBottom>{army.name} Units</Typography>
       {(army?.units || []).map(({ unitName, variants }) => (
-        <ArmyViewer units={variants} army={army.name} unitName={unitName} />
+        <PurchaseUnits units={variants} army={army.name} unitName={unitName} />
       ))}
     </Box>
   );
