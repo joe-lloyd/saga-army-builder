@@ -102,7 +102,10 @@ const ArmyViewerMobile: React.FC<
         <CloseIcon />
       </IconButton>
       {Object.values(units).map((unit) => (
-        <Card sx={{ marginBottom: "8px" }}>
+        <Card
+          key={`${unit.unit}-${unit.equipmentOptions}`}
+          sx={{ marginBottom: "8px" }}
+        >
           <CardContent>
             <Typography variant="h5" component="h2">
               {unit.unit}:{" "}
@@ -175,6 +178,10 @@ const ArmyViewer: React.ForwardRefRenderFunction<
 const ArmyViewerForward = React.forwardRef<
   HTMLDivElement,
   { setOpen: React.Dispatch<React.SetStateAction<boolean>> }
->(ArmyViewer);
+>((props, ref) => (
+  <div ref={ref} tabIndex={0} role="dialog">
+    <ArmyViewer {...props} />
+  </div>
+));
 
 export { ArmyViewerForward };

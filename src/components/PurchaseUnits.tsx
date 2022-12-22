@@ -169,7 +169,7 @@ const ArmyCard: React.FC<UnitsProps> = ({
   handleRemoveUnitUnits,
 }) => {
   return units.map((unit) => (
-    <StyledCard>
+    <StyledCard key={`${unit.unit}-${unit.equipmentOptions}`}>
       <CardContent>
         <Typography variant="h5" component="h2">
           {unit.unit}
