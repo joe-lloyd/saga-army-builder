@@ -1,22 +1,16 @@
 import {
   Box,
-  Button,
   Card,
   FormControl,
   FormHelperText,
   InputAdornment,
-  Modal,
   OutlinedInput,
   Typography,
 } from "@mui/material";
 import React from "react";
 import { PointsContext } from "../contexts/pointsContext";
-import { ArmyViewerForward } from "./ArmyViewer";
 
 const Hero = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const { initialPoints, currentPoints, setInitialPoints } =
     React.useContext(PointsContext);
 
@@ -82,25 +76,8 @@ const Hero = () => {
               Points left
             </FormHelperText>
           </FormControl>
-          <Button
-            sx={{
-              marginRight: 1,
-            }}
-            onClick={handleOpen}
-          >
-            View Army
-          </Button>
         </Card>
       </Box>
-      <Modal
-        sx={{ overflow: "scroll", marginTop: "16px" }}
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <ArmyViewerForward setOpen={setOpen} />
-      </Modal>
     </>
   );
 };

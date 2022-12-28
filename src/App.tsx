@@ -7,6 +7,7 @@ import { ArmySelectorForScreenSize } from "./components/ArmySelector";
 import { ArmyUnitSelector } from "./components/ArmyUnitSelector";
 import { ErrorSnackbar } from "./components/ErrorSnackbar";
 import { SuccessSnackbar } from "./components/SuccessSnackbar";
+import { StickyBottomBar } from "./components/StickyBottomBar";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       </Container>
       <ErrorSnackbar />
       <SuccessSnackbar />
+      <StickyBottomBar />
     </Providers>
   );
 }
