@@ -109,8 +109,10 @@ const ArmyViewerMobile: React.FC<
           <CardContent>
             <Typography variant="h5" component="h2">
               {unit.unit}:{" "}
-              {unit.equipmentOptions === "None" ? "" : unit.equipmentOptions} (
-              {unit.unitSize})
+              {unit.equipmentOptions === "None"
+                ? ""
+                : unit.equipmentOptions.split(/(?=[A-Z])/).join(" ")}{" "}
+              ({unit.unitSize})
             </Typography>
             <Table sx={{ maxWidth: "100%" }} aria-label="simple table">
               <TableHead>
