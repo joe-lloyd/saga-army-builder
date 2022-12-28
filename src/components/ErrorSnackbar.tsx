@@ -21,6 +21,7 @@ const ErrorSnackbar = () => {
       open={!!errorMessage}
       autoHideDuration={6000}
       onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
     >
       <Alert severity="error">{errorMessage}</Alert>
     </Snackbar>

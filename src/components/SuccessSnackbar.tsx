@@ -21,6 +21,7 @@ const SuccessSnackbar = () => {
       open={!!successMessage}
       autoHideDuration={6000}
       onClose={handleClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
     >
       <Alert severity="success">{successMessage}</Alert>
     </Snackbar>
