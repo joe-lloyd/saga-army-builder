@@ -41,10 +41,8 @@ const SaveArmyDialog: React.FC<SaveArmyDialogInterface> = ({
       armyName,
       faction: army.name,
       units,
-      points: {
-        initialPoints,
-        currentPoints,
-      },
+      initialPoints,
+      currentPoints,
     });
     setArmyName("");
     setSuccess(`Army ${armyName} saved.`);

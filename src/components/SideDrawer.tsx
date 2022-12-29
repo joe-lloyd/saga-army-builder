@@ -8,7 +8,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ShieldIcon from "@mui/icons-material/Shield";
-import { IconButton, Typography } from "@mui/material";
+import { IconButton, Tooltip, Typography } from "@mui/material";
 import { UsersSavedArmiesContext } from "../contexts/usersSavedArmiesContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PointsContext } from "../contexts/pointsContext";
@@ -17,6 +17,9 @@ import { ArmyInterface } from "../ArmyUnitTypes";
 import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
 import { UnitContext } from "../contexts/unitContext";
 import { initialPointsState } from "../reducers/pointsReducer";
+import QrCodeIcon from "@mui/icons-material/QrCode";
+import { generateArmyUrl } from "../helpers/generateArmyUrl";
+import QRCode from "react-qr-code";
 
 interface SideDrawerProps {
   toggleDrawer: (open: boolean) => void;
@@ -34,7 +37,10 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ toggleDrawer, open }) => {
   const loadArmy = (id: string) => {
     const selectedArmy = usersSavedArmies.find((army) => army.id === id);
     if (!selectedArmy) return;
-    setPoints(selectedArmy.points);
+    setPoints({
+      initialPoints: selectedArmy.initialPoints,
+      currentPoints: selectedArmy.currentPoints,
+    });
     setArmy(
       armies.find(({ name }) => name === selectedArmy.faction) as ArmyInterface
     );
@@ -89,13 +95,30 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ toggleDrawer, open }) => {
               key={army.armyName}
               disablePadding
               secondaryAction={
-                <IconButton
-                  edge="end"
-                  aria-label="delete"
-                  onClick={() => deleteUserSavedArmy(army.id)}
-                >
-                  <DeleteIcon />
-                </IconButton>
+                <>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={() => deleteUserSavedArmy(army.id)}
+                    sx={{ mr: 1 }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                  <Tooltip
+                    title={
+                      <React.Fragment>
+                        <Typography color="inherit">
+                          Use for linking army to your phone
+                        </Typography>
+                        <QRCode value={generateArmyUrl(army) as string} />
+                      </React.Fragment>
+                    }
+                  >
+                    <IconButton edge="end" aria-label="generate qr code">
+                      <QrCodeIcon />
+                    </IconButton>
+                  </Tooltip>
+                </>
               }
             >
               <ListItemButton onClick={() => loadArmy(army.id)}>

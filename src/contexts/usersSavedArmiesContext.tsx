@@ -1,19 +1,17 @@
-import React from "react";
+import React from 'react';
 import {
   usersSavedArmiesActions,
   usersSavedArmiesReducer,
-} from "../reducers/usersSavedArmiesReducer";
-import { factions, Unit, UnitDetails } from "../ArmyUnitTypes";
+} from '../reducers/usersSavedArmiesReducer';
+import { factions, Unit, UnitDetails } from '../ArmyUnitTypes';
 
 interface UserSavedArmy {
   id: string;
   armyName: string;
   faction: typeof factions[number];
   units: UnitDetails<Unit>[];
-  points: {
-    initialPoints: number;
-    currentPoints: number;
-  };
+  initialPoints: number;
+  currentPoints: number;
 }
 
 interface UsersSavedArmiesInitialState {
@@ -24,28 +22,45 @@ interface UsersSavedArmiesInitialState {
 
 const usersSavedArmiesInitialState: UsersSavedArmiesInitialState = {
   usersSavedArmies: [],
-  setUserSavedArmy: (army: UserSavedArmy) => {},
-  deleteUserSavedArmy: (id: string) => {},
+  setUserSavedArmy: (army: UserSavedArmy) => {
+  },
+  deleteUserSavedArmy: (id: string) => {
+  },
 };
 
 const UsersSavedArmiesContext = React.createContext(
   usersSavedArmiesInitialState
 );
 
-const UsersSavedArmiesProvider: React.FC<any> = ({ children }) => {
-  const usersSavedArmies = localStorage.getItem("usersSavedArmies");
-  const loadedState = !!usersSavedArmies?.length
-    ? {
-        ...usersSavedArmiesInitialState,
-        usersSavedArmies: JSON.parse(usersSavedArmies),
-      }
-    : usersSavedArmiesInitialState;
+const UsersSavedArmiesProvider: React.FC<any> = ({
+                                                   children,
+                                                   value,
+                                                 }) => {
+  const usersSavedArmies = localStorage.getItem('usersSavedArmies');
+  let initialStateSavedArmies: UsersSavedArmiesInitialState =
+    usersSavedArmiesInitialState;
+  if (usersSavedArmies) {
+    initialStateSavedArmies = {
+      ...initialStateSavedArmies,
+      usersSavedArmies: JSON.parse(usersSavedArmies),
+    };
+  }
+  if (value) {
+    initialStateSavedArmies = {
+      ...initialStateSavedArmies,
+      usersSavedArmies: [
+        ...initialStateSavedArmies.usersSavedArmies,
+        value,
+      ],
+    };
+  }
+
   const [state, dispatch] = React.useReducer(
     usersSavedArmiesReducer,
-    loadedState
+    initialStateSavedArmies
   );
 
-  const value = {
+  const data = {
     usersSavedArmies: state.usersSavedArmies,
     setUserSavedArmy: (army: UserSavedArmy) => {
       dispatch({
@@ -62,7 +77,7 @@ const UsersSavedArmiesProvider: React.FC<any> = ({ children }) => {
   };
 
   return (
-    <UsersSavedArmiesContext.Provider value={value}>
+    <UsersSavedArmiesContext.Provider value={data}>
       {children}
     </UsersSavedArmiesContext.Provider>
   );
