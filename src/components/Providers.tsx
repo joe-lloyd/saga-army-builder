@@ -6,7 +6,7 @@ import { ErrorProvider } from "../contexts/errorContext";
 import { SuccessProvider } from "../contexts/successContext";
 import { UnitProvider } from "../contexts/unitContext";
 import { UsersSavedArmiesProvider } from "../contexts/usersSavedArmiesContext";
-import { decodeUrlParams } from '../helpers/generateArmyUrl';
+import { decodeUrlParams } from "../helpers/generateArmyUrl";
 
 const darkTheme = createTheme({
   palette: {
@@ -23,7 +23,9 @@ const Providers: React.FC<any> = ({ children }) => {
           <UnitProvider>
             <PointsProvider>
               <ArmyProvider>
-                <UsersSavedArmiesProvider value={savedArmy}>{children}</UsersSavedArmiesProvider>
+                <UsersSavedArmiesProvider value={savedArmy}>
+                  {children}
+                </UsersSavedArmiesProvider>
               </ArmyProvider>
             </PointsProvider>
           </UnitProvider>

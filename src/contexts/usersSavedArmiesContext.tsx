@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 import {
   usersSavedArmiesActions,
   usersSavedArmiesReducer,
-} from '../reducers/usersSavedArmiesReducer';
-import { factions, Unit, UnitDetails } from '../ArmyUnitTypes';
+} from "../reducers/usersSavedArmiesReducer";
+import { factions, Unit, UnitDetails } from "../ArmyUnitTypes";
 
 interface UserSavedArmy {
   id: string;
@@ -22,21 +22,16 @@ interface UsersSavedArmiesInitialState {
 
 const usersSavedArmiesInitialState: UsersSavedArmiesInitialState = {
   usersSavedArmies: [],
-  setUserSavedArmy: (army: UserSavedArmy) => {
-  },
-  deleteUserSavedArmy: (id: string) => {
-  },
+  setUserSavedArmy: (army: UserSavedArmy) => {},
+  deleteUserSavedArmy: (id: string) => {},
 };
 
 const UsersSavedArmiesContext = React.createContext(
   usersSavedArmiesInitialState
 );
 
-const UsersSavedArmiesProvider: React.FC<any> = ({
-                                                   children,
-                                                   value,
-                                                 }) => {
-  const usersSavedArmies = localStorage.getItem('usersSavedArmies');
+const UsersSavedArmiesProvider: React.FC<any> = ({ children, value }) => {
+  const usersSavedArmies = localStorage.getItem("usersSavedArmies");
   let initialStateSavedArmies: UsersSavedArmiesInitialState =
     usersSavedArmiesInitialState;
   if (usersSavedArmies) {
@@ -48,10 +43,7 @@ const UsersSavedArmiesProvider: React.FC<any> = ({
   if (value) {
     initialStateSavedArmies = {
       ...initialStateSavedArmies,
-      usersSavedArmies: [
-        ...initialStateSavedArmies.usersSavedArmies,
-        value,
-      ],
+      usersSavedArmies: [...initialStateSavedArmies.usersSavedArmies, value],
     };
   }
 

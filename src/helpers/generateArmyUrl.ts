@@ -21,16 +21,14 @@ const decodeUrlParams = () => {
   const currentUrl = window.location.href;
   const searchParams = new URL(currentUrl).searchParams;
   if (!searchParams) return;
+  /// check id first
+  const id = searchParams.get("id") as string;
+  if (!id) return;
 
-  const initialPoints = decodeURIComponent(
-    searchParams.get("initialPoints") as string
-  );
-  const currentPoints = decodeURIComponent(
-    searchParams.get("currentPoints") as string
-  );
-  const id = decodeURIComponent(searchParams.get("id") as string);
+  const initialPoints = searchParams.get("initialPoints") as string;
+  const currentPoints = searchParams.get("currentPoints") as string;
+  const faction = searchParams.get("faction") as string;
   const armyName = decodeURIComponent(searchParams.get("armyName") as string);
-  const faction = decodeURIComponent(searchParams.get("faction") as string);
   const units = JSON.parse(
     decodeURIComponent(searchParams.get("units") as string)
   );
