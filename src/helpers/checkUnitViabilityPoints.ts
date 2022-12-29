@@ -43,7 +43,7 @@ const checkUnitCanBeBoughtWithAnyUnitInCurrentArmy = (
   unitsToTrade: UnitDetails<Unit>[]
 ): boolean =>
   unitsToTrade.some((unitToTrade) =>
-    Object.keys(unit.cost.units as UnitsToSpend).find(
+    Object.keys({ ...unit.cost.units } as UnitsToSpend).find(
       (unitName) => unitName === unitToTrade.unit
     )
   );

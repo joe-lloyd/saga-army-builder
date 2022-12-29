@@ -6,13 +6,13 @@ import { armyData } from "../data/armies";
 interface ArmyInitialState {
   army?: ArmyInterface;
   armies: ArmyInterface[];
-  setArmy: (army: ArmyInterface) => void;
+  setArmy: (army: ArmyInterface | undefined) => void;
 }
 
 const armyInitialState: ArmyInitialState = {
   army: undefined,
   armies: armyData,
-  setArmy: (army: ArmyInterface) => {},
+  setArmy: (army: ArmyInterface | undefined) => {},
 };
 
 const ArmyContext = React.createContext(armyInitialState);
@@ -27,7 +27,7 @@ const ArmyProvider: React.FC<any> = ({ children }) => {
   const value = {
     army: state.army,
     armies: state.armies,
-    setArmy: (army: ArmyInterface) => {
+    setArmy: (army: ArmyInterface | undefined) => {
       dispatch({ type: armyActions.SET_ARMY, payload: army });
     },
   };
@@ -37,4 +37,4 @@ const ArmyProvider: React.FC<any> = ({ children }) => {
 
 export type { ArmyInitialState };
 
-export { ArmyProvider, ArmyContext };
+export { ArmyProvider, ArmyContext, armyInitialState };

@@ -18,12 +18,14 @@ const style = {
 };
 
 interface UnitCostDialogInterface {
+  index: number;
   unit: UnitDetails<Unit>;
-  setOpen: (open: boolean) => void;
+  setOpen: (open: { [key: number]: boolean }) => void;
   open: boolean;
 }
 
 const UnitCostDialog: React.FC<UnitCostDialogInterface> = ({
+  index,
   unit,
   setOpen,
   open,
@@ -65,7 +67,7 @@ const UnitCostDialog: React.FC<UnitCostDialogInterface> = ({
     reason?: string
   ) => {
     if (reason !== "backdropClick") {
-      setOpen(false);
+      setOpen({ [index]: false });
     }
   };
 

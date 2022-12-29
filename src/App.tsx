@@ -8,11 +8,13 @@ import { ArmyUnitSelector } from "./components/ArmyUnitSelector";
 import { ErrorSnackbar } from "./components/ErrorSnackbar";
 import { SuccessSnackbar } from "./components/SuccessSnackbar";
 import { StickyBottomBar } from "./components/StickyBottomBar";
+import { AppBarWithMenu } from './components/AppBar';
 
 function App() {
   return (
     <Providers>
       <CssBaseline />
+      <AppBarWithMenu />
       <Container maxWidth="lg" sx={{ p: { xs: "8px", sm: "16px" } }}>
         <Hero />
         <ArmySelectorForScreenSize />

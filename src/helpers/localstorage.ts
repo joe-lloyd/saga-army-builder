@@ -2,6 +2,8 @@ enum LocalstorageKeys {
   army = "army",
   units = "units",
   points = "points",
+  initialPoints = "initialPoints",
+  usersSavedArmies = "usersSavedArmies",
 }
 
 const addToLocalStorage = (key: LocalstorageKeys, value: {} | string) => {

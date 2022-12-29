@@ -6,17 +6,19 @@ enum actions {
   SPEND_POINTS = "SPEND_POINTS",
   RECEIVE_POINTS = "RECEIVE_POINTS",
   RESET_POINTS = "RESET_POINTS",
+  SET_POINTS = "SET_POINTS",
 }
 
 interface Actions {
   type: actions;
-  points?: number;
+  points?: number | { initialPoints: number, currentPoints: number };
 }
 
-const initialState = {
+const initialPointsState = {
   initialPoints: 8,
   currentPoints: 8,
   setInitialPoints: (points: number) => {},
+  setPoints: (points: { initialPoints: number; currentPoints: number }) => {},
   spendPoints: (points: number) => {},
   receivePoints: (points: number) => {},
   resetPoints: () => {},
@@ -33,10 +35,30 @@ const pointsReducer = (
     case actions.SET_INITIAL_POINTS:
       if (typeof points !== "number") return state;
       addToLocalStorage(LocalstorageKeys.points, `${points}`);
+      addToLocalStorage(LocalstorageKeys.initialPoints, `${points}`);
       return {
         ...state,
         initialPoints: points,
         currentPoints: points,
+      };
+    case actions.SET_POINTS:
+      addToLocalStorage(
+        LocalstorageKeys.points,
+        `${
+          (points as { initialPoints: number; currentPoints: number })
+            .currentPoints
+        }`
+      );
+      addToLocalStorage(
+        LocalstorageKeys.initialPoints,
+        `${
+          (points as { initialPoints: number; currentPoints: number })
+            .initialPoints
+        }`
+      );
+      return {
+        ...state,
+        ...points as { initialPoints: number, currentPoints: number },
       };
     case actions.SPEND_POINTS: {
       if (typeof points !== "number") return state;
@@ -70,11 +92,12 @@ const pointsReducer = (
     }
     case actions.RESET_POINTS: {
       addToLocalStorage(LocalstorageKeys.points, 8);
-      return initialState;
+      addToLocalStorage(LocalstorageKeys.initialPoints, 8);
+      return initialPointsState;
     }
     default:
       return state;
   }
 };
 
-export { pointsReducer, actions, initialState };
+export { pointsReducer, actions, initialPointsState };

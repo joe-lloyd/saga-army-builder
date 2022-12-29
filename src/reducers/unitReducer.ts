@@ -14,7 +14,7 @@ interface ArmyActions {
   payload?: UnitDetails<Unit>[] | UnitDetails<Unit> | ArmyInterface;
 }
 
-const initialState: UnitProviderState = {
+const initialUnitsState: UnitProviderState = {
   units: [],
   setInitialUnits: (units: UnitDetails<Unit>[]) => {},
   addUnit: (unit: UnitDetails<Unit>) => {},
@@ -74,11 +74,11 @@ const unitReducer = (
     }
     case unitActions.RESET_UNITS: {
       addToLocalStorage(LocalstorageKeys.units, "");
-      return initialState;
+      return initialUnitsState;
     }
     default:
       return state;
   }
 };
 
-export { unitReducer, unitActions, initialState };
+export { unitReducer, unitActions, initialUnitsState };

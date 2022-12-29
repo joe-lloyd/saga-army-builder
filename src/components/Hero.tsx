@@ -33,7 +33,7 @@ const Hero = () => {
         </Typography>
         <Card
           sx={{
-            my: 4,
+            mt: 4,
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
@@ -57,7 +57,7 @@ const Hero = () => {
               }}
             />
             <FormHelperText id="full-points-helper-text">
-              Set your points
+              Total Points
             </FormHelperText>
           </FormControl>
           <FormControl sx={{ m: 1, width: "20ch" }} variant="outlined">

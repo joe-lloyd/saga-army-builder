@@ -1,7 +1,7 @@
 import React from "react";
 import {
   unitActions,
-  initialState,
+  initialUnitsState,
   unitReducer,
 } from "../reducers/unitReducer";
 import { Unit, UnitDetails } from "../ArmyUnitTypes";
@@ -15,13 +15,13 @@ interface UnitProviderState {
 }
 
 //Context and Provider
-const UnitContext = React.createContext(initialState);
+const UnitContext = React.createContext(initialUnitsState);
 
 const UnitProvider: React.FC<any> = ({ children }) => {
   const units = localStorage.getItem("units");
   const hydratedInitialState = units
-    ? { ...initialState, units: JSON.parse(units) }
-    : initialState;
+    ? { ...initialUnitsState, units: JSON.parse(units) }
+    : initialUnitsState;
 
   const [state, dispatch] = React.useReducer(unitReducer, hydratedInitialState);
 

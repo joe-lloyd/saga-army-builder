@@ -7,7 +7,7 @@ enum armyActions {
 
 interface ArmyActions {
   type: armyActions;
-  payload?: UnitDetails<Unit>[] | UnitDetails<Unit> | ArmyInterface;
+  payload: ArmyInterface | undefined;
 }
 
 //Reducer to Handle Actions

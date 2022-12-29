@@ -38,8 +38,8 @@ interface UnitsProps {
   units: UnitDetails<Unit>[];
   army: string;
   currentUnits: UnitDetails<Unit>[];
-  setOpenUnitCostDialog: Dispatch<SetStateAction<boolean>>;
-  openUnitCostDialog: boolean;
+  setOpenUnitCostDialog: Dispatch<SetStateAction<{[key: number]: boolean}>>;
+  openUnitCostDialog: {[key: number]: boolean};
   handleAddUnitPoints: (unit: UnitDetails<Unit>) => void;
   unitExists: (unit: UnitDetails<Unit>) => boolean;
   handleRemoveUnitPoints: (unit: UnitDetails<Unit>) => void;
@@ -83,7 +83,7 @@ const ArmyTable: React.FC<UnitsProps> = ({
               </TableRow>
             </TableHead>
             <TableBody>
-              {units.map((unit) => (
+              {units.map((unit, index) => (
                 <TableRow
                   key={unit.equipmentOptions}
                   sx={{
@@ -109,14 +109,17 @@ const ArmyTable: React.FC<UnitsProps> = ({
                         <>
                           <IconButton
                             aria-label={`add-${unit.unit}-with-units`}
-                            onClick={() => setOpenUnitCostDialog(true)}
+                            onClick={() =>
+                              setOpenUnitCostDialog({ [index]: true })
+                            }
                           >
                             <AddIcon />
                           </IconButton>
                           <UnitCostDialog
+                            index={index}
                             unit={unit}
                             setOpen={setOpenUnitCostDialog}
-                            open={openUnitCostDialog}
+                            open={openUnitCostDialog[index]}
                           />
                         </>
                       )}
@@ -232,14 +235,15 @@ const ArmyCard: React.FC<UnitsProps> = ({
                 <>
                   <Button
                     size="small"
-                    onClick={() => setOpenUnitCostDialog(true)}
+                    onClick={() => setOpenUnitCostDialog({[index]: true})}
                   >
                     Add Unit
                   </Button>
                   <UnitCostDialog
+                    index={index}
                     unit={unit}
                     setOpen={setOpenUnitCostDialog}
-                    open={openUnitCostDialog}
+                    open={openUnitCostDialog[index]}
                   />
                 </>
               )}
@@ -275,7 +279,7 @@ const PurchaseUnits: React.FC<{
   const theme = useTheme();
   const isScreenSizeLarge = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState(false);
+  const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState<{[key: number]: boolean}>({});
   const { spendPoints, receivePoints, currentPoints } =
     React.useContext(PointsContext);
   const {
