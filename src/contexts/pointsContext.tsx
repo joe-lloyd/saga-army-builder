@@ -9,7 +9,7 @@ interface PointsProviderState {
   initialPoints: number;
   currentPoints: number;
   setInitialPoints: (points: number) => void;
-  setPoints: (points: { initialPoints: number, currentPoints: number }) => void;
+  setPoints: (points: { initialPoints: number; currentPoints: number }) => void;
   spendPoints: (points: number) => void;
   receivePoints: (points: number) => void;
   resetPoints: () => void;
@@ -21,9 +21,14 @@ const PointsContext = React.createContext(initialPointsState);
 const PointsProvider: React.FC<any> = ({ children }) => {
   const currentPoints = localStorage.getItem("points");
   const initialPoints = localStorage.getItem("initialPoints");
-  const hydratedInitialState = currentPoints && initialPoints
-    ? { ...initialPointsState, currentPoints: parseInt(currentPoints), initialPoints: parseInt(initialPoints) }
-    : initialPointsState;
+  const hydratedInitialState =
+    currentPoints && initialPoints
+      ? {
+          ...initialPointsState,
+          currentPoints: parseInt(currentPoints),
+          initialPoints: parseInt(initialPoints),
+        }
+      : initialPointsState;
 
   const [state, dispatch] = React.useReducer(
     pointsReducer,
@@ -36,7 +41,7 @@ const PointsProvider: React.FC<any> = ({ children }) => {
     setInitialPoints: (points: number) => {
       dispatch({ type: actions.SET_INITIAL_POINTS, points });
     },
-    setPoints: (points: { initialPoints: number, currentPoints: number }) => {
+    setPoints: (points: { initialPoints: number; currentPoints: number }) => {
       dispatch({ type: actions.SET_POINTS, points });
     },
     spendPoints: (points: number) => {

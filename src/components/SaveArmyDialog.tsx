@@ -8,11 +8,11 @@ import {
   TextField,
 } from "@mui/material";
 import React from "react";
-import { UsersSavedArmiesContext } from '../contexts/usersSavedArmiesContext';
-import { ArmyContext } from '../contexts/armyContext';
-import { UnitContext } from '../contexts/unitContext';
-import { PointsContext } from '../contexts/pointsContext';
-import { SuccessContext } from '../contexts/successContext';
+import { UsersSavedArmiesContext } from "../contexts/usersSavedArmiesContext";
+import { ArmyContext } from "../contexts/armyContext";
+import { UnitContext } from "../contexts/unitContext";
+import { PointsContext } from "../contexts/pointsContext";
+import { SuccessContext } from "../contexts/successContext";
 
 interface SaveArmyDialogInterface {
   open: boolean;
@@ -35,16 +35,18 @@ const SaveArmyDialog: React.FC<SaveArmyDialogInterface> = ({
       return;
     }
     setOpen(false);
+    const timestamp = Date.now().toString();
     setUserSavedArmy({
+      id: timestamp,
       armyName,
       faction: army.name,
       units,
       points: {
         initialPoints,
         currentPoints,
-      }
-    })
-    setArmyName('');
+      },
+    });
+    setArmyName("");
     setSuccess(`Army ${armyName} saved.`);
   };
 

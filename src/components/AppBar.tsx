@@ -9,7 +9,7 @@ import {
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { SideDrawer } from "./SideDrawer";
-import { SaveArmyDialog } from './SaveArmyDialog';
+import { SaveArmyDialog } from "./SaveArmyDialog";
 
 const AppBarWithMenu = () => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
@@ -34,7 +34,9 @@ const AppBarWithMenu = () => {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               SAGA
             </Typography>
-            <Button color="inherit" onClick={() => setOpenSaveModal(true)}>Save Army</Button>
+            <Button color="inherit" onClick={() => setOpenSaveModal(true)}>
+              Save Army
+            </Button>
             <SaveArmyDialog open={openSaveModal} setOpen={setOpenSaveModal} />
           </Toolbar>
         </AppBar>

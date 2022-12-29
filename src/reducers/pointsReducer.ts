@@ -11,7 +11,7 @@ enum actions {
 
 interface Actions {
   type: actions;
-  points?: number | { initialPoints: number, currentPoints: number };
+  points?: number | { initialPoints: number; currentPoints: number };
 }
 
 const initialPointsState = {
@@ -58,7 +58,7 @@ const pointsReducer = (
       );
       return {
         ...state,
-        ...points as { initialPoints: number, currentPoints: number },
+        ...(points as { initialPoints: number; currentPoints: number }),
       };
     case actions.SPEND_POINTS: {
       if (typeof points !== "number") return state;

@@ -1,4 +1,4 @@
-import { ArmyInterface, Unit, UnitDetails } from "../ArmyUnitTypes";
+import { ArmyInterface } from "../ArmyUnitTypes";
 import { ArmyInitialState } from "../contexts/armyContext";
 
 enum armyActions {

@@ -6,6 +6,7 @@ import {
 import { factions, Unit, UnitDetails } from "../ArmyUnitTypes";
 
 interface UserSavedArmy {
+  id: string;
   armyName: string;
   faction: typeof factions[number];
   units: UnitDetails<Unit>[];
@@ -18,13 +19,13 @@ interface UserSavedArmy {
 interface UsersSavedArmiesInitialState {
   usersSavedArmies: UserSavedArmy[];
   setUserSavedArmy: (army: UserSavedArmy) => void;
-  deleteUserSavedArmy: (indexToDelete: number) => void;
+  deleteUserSavedArmy: (id: string) => void;
 }
 
 const usersSavedArmiesInitialState: UsersSavedArmiesInitialState = {
   usersSavedArmies: [],
   setUserSavedArmy: (army: UserSavedArmy) => {},
-  deleteUserSavedArmy: (indexToDelete: number) => {},
+  deleteUserSavedArmy: (id: string) => {},
 };
 
 const UsersSavedArmiesContext = React.createContext(
@@ -52,10 +53,10 @@ const UsersSavedArmiesProvider: React.FC<any> = ({ children }) => {
         payload: army,
       });
     },
-    deleteUserSavedArmy: (indexToDelete: number) => {
+    deleteUserSavedArmy: (id: string) => {
       dispatch({
-        type: usersSavedArmiesActions.DELETE_USER_SAVED_ARMY_BY_INDEX,
-        payload: indexToDelete,
+        type: usersSavedArmiesActions.DELETE_USER_SAVED_ARMY_BY_ID,
+        payload: id,
       });
     },
   };

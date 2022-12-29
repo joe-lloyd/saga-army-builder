@@ -12,11 +12,11 @@ import { IconButton, Typography } from "@mui/material";
 import { UsersSavedArmiesContext } from "../contexts/usersSavedArmiesContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { PointsContext } from "../contexts/pointsContext";
-import { ArmyContext } from '../contexts/armyContext';
+import { ArmyContext } from "../contexts/armyContext";
 import { ArmyInterface } from "../ArmyUnitTypes";
 import { addToLocalStorage, LocalstorageKeys } from "../helpers/localstorage";
 import { UnitContext } from "../contexts/unitContext";
-import { initialPointsState } from '../reducers/pointsReducer';
+import { initialPointsState } from "../reducers/pointsReducer";
 
 interface SideDrawerProps {
   toggleDrawer: (open: boolean) => void;
@@ -31,8 +31,9 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ toggleDrawer, open }) => {
   const { setArmy, armies } = React.useContext(ArmyContext);
   const { setInitialUnits } = React.useContext(UnitContext);
 
-  const loadArmy = (index: number) => {
-    const selectedArmy = usersSavedArmies[index];
+  const loadArmy = (id: string) => {
+    const selectedArmy = usersSavedArmies.find((army) => army.id === id);
+    if (!selectedArmy) return;
     setPoints(selectedArmy.points);
     setArmy(
       armies.find(({ name }) => name === selectedArmy.faction) as ArmyInterface
@@ -45,7 +46,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ toggleDrawer, open }) => {
   const clearArmy = () => {
     setPoints(initialPointsState);
     setArmy(undefined);
-    addToLocalStorage(LocalstorageKeys.army, '');
+    addToLocalStorage(LocalstorageKeys.army, "");
     setInitialUnits([]);
     toggleDrawer(false);
   };
@@ -91,13 +92,13 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ toggleDrawer, open }) => {
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => deleteUserSavedArmy(index)}
+                  onClick={() => deleteUserSavedArmy(army.id)}
                 >
                   <DeleteIcon />
                 </IconButton>
               }
             >
-              <ListItemButton onClick={() => loadArmy(index)}>
+              <ListItemButton onClick={() => loadArmy(army.id)}>
                 <ListItemIcon>
                   <ShieldIcon />
                 </ListItemIcon>

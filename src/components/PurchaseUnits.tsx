@@ -38,8 +38,8 @@ interface UnitsProps {
   units: UnitDetails<Unit>[];
   army: string;
   currentUnits: UnitDetails<Unit>[];
-  setOpenUnitCostDialog: Dispatch<SetStateAction<{[key: number]: boolean}>>;
-  openUnitCostDialog: {[key: number]: boolean};
+  setOpenUnitCostDialog: Dispatch<SetStateAction<{ [key: number]: boolean }>>;
+  openUnitCostDialog: { [key: number]: boolean };
   handleAddUnitPoints: (unit: UnitDetails<Unit>) => void;
   unitExists: (unit: UnitDetails<Unit>) => boolean;
   handleRemoveUnitPoints: (unit: UnitDetails<Unit>) => void;
@@ -235,7 +235,7 @@ const ArmyCard: React.FC<UnitsProps> = ({
                 <>
                   <Button
                     size="small"
-                    onClick={() => setOpenUnitCostDialog({[index]: true})}
+                    onClick={() => setOpenUnitCostDialog({ [index]: true })}
                   >
                     Add Unit
                   </Button>
@@ -279,7 +279,9 @@ const PurchaseUnits: React.FC<{
   const theme = useTheme();
   const isScreenSizeLarge = useMediaQuery(theme.breakpoints.up("sm"));
 
-  const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState<{[key: number]: boolean}>({});
+  const [openUnitCostDialog, setOpenUnitCostDialog] = React.useState<{
+    [key: number]: boolean;
+  }>({});
   const { spendPoints, receivePoints, currentPoints } =
     React.useContext(PointsContext);
   const {
