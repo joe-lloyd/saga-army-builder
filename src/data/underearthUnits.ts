@@ -42,11 +42,11 @@ const createUnderearthWarMachine = (
   };
 };
 
-const createWarriorsWithFirearms = () => {
+const createWarriorsWithFirearms = (): UnitDetails<Unit> => {
   const warriors = createWarriors("Crossbow");
   return {
     ...warriors,
-    equipmentOptions: "Firearm",
+    equipmentOptions: "Firearms",
   };
 };
 

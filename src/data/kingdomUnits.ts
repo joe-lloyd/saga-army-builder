@@ -16,15 +16,15 @@ const createKingdomsWarlord = (
   equipmentOptions:
     | "None"
     | "HeavyWeapon"
-    | "MountAnimal"
+    | "MountedAnimal"
     | "WingedMount"
     | "MountBeast"
     | "MountFlyingBeast"
 ): UnitDetails<Unit> => {
-  let warlord;
+  let warlord: UnitDetails<Unit>;
   if (equipmentOptions === "WingedMount") {
     warlord = {
-      ...createWarlord("MountAnimal"),
+      ...createWarlord("MountedAnimal"),
       equipmentOptions: "WingedMount",
     };
   } else {
@@ -35,12 +35,12 @@ const createKingdomsWarlord = (
 };
 
 const createCaptain = (
-  equipmentOptions: "None" | "HeavyWeapon" | "MountAnimal" | "WingedMount"
+  equipmentOptions: "None" | "HeavyWeapon" | "MountedAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
-  let lieutenant;
+  let lieutenant: UnitDetails<Unit>;
   if (equipmentOptions === "WingedMount") {
     lieutenant = {
-      ...createLieutenant("MountAnimal"),
+      ...createLieutenant("MountedAnimal"),
       equipmentOptions: "WingedMount",
     };
   } else {
@@ -54,7 +54,7 @@ const createCaptain = (
 };
 
 const createPaladin = (
-  equipmentOptions: "None" | "HeavyWeapon" | "MountAnimal" | "WingedMount"
+  equipmentOptions: "None" | "HeavyWeapon" | "MountedAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
   return {
     unit: "Paladin",
@@ -64,13 +64,13 @@ const createPaladin = (
       melee: {
         None: 5,
         HeavyWeapon: 4,
-        MountAnimal: 5,
+        MountedAnimal: 5,
         WingedMount: 5,
       }[equipmentOptions],
       shooting: {
         None: 5,
         HeavyWeapon: 5,
-        MountAnimal: 4,
+        MountedAnimal: 4,
         WingedMount: 4,
       }[equipmentOptions],
     },
@@ -90,12 +90,12 @@ const createPaladin = (
 };
 
 const createKingdomsSorcerer = (
-  equipmentOptions: "None" | "MountAnimal" | "WingedMount"
+  equipmentOptions: "None" | "MountedAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
-  let warlord;
+  let warlord: UnitDetails<Unit>;
   if (equipmentOptions === "WingedMount") {
     warlord = {
-      ...createSorcerer("MountAnimal"),
+      ...createSorcerer("MountedAnimal"),
       equipmentOptions: "WingedMount",
     };
   } else {
@@ -108,7 +108,7 @@ const createKingdomsSorcerer = (
 const createKingdomsHearthguards = (
   equipmentOptions: "None" | "HeavyWeapon" | "MountedAnimal" | "WingedMount"
 ): UnitDetails<Unit> => {
-  let warlord;
+  let warlord: UnitDetails<Unit>;
   if (equipmentOptions === "WingedMount") {
     warlord = {
       ...createHearthguards("MountedAnimal"),
@@ -139,7 +139,7 @@ const kingdomUnits: ArmyInterface = {
       variants: [
         createKingdomsWarlord("None"),
         createKingdomsWarlord("HeavyWeapon"),
-        createKingdomsWarlord("MountAnimal"),
+        createKingdomsWarlord("MountedAnimal"),
         createKingdomsWarlord("WingedMount"),
         createKingdomsWarlord("MountBeast"),
         createKingdomsWarlord("MountFlyingBeast"),
@@ -150,7 +150,7 @@ const kingdomUnits: ArmyInterface = {
       variants: [
         createCaptain("None"),
         createCaptain("HeavyWeapon"),
-        createCaptain("MountAnimal"),
+        createCaptain("MountedAnimal"),
         createCaptain("WingedMount"),
       ],
     },
@@ -159,7 +159,7 @@ const kingdomUnits: ArmyInterface = {
       variants: [
         createPaladin("None"),
         createPaladin("HeavyWeapon"),
-        createPaladin("MountAnimal"),
+        createPaladin("MountedAnimal"),
         createPaladin("WingedMount"),
       ],
     },
@@ -167,7 +167,7 @@ const kingdomUnits: ArmyInterface = {
       unitName: "Sorcerer",
       variants: [
         createKingdomsSorcerer("None"),
-        createKingdomsSorcerer("MountAnimal"),
+        createKingdomsSorcerer("MountedAnimal"),
         createKingdomsSorcerer("WingedMount"),
       ],
     },

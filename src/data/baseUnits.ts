@@ -5,9 +5,9 @@ const createWarlord = (
     | "None"
     | "HeavyWeapon"
     | "Bow"
-    | "MountAnimal"
+    | "MountedAnimal"
     | "Flying"
-    | "MountAnimalCompositeBow"
+    | "MountedAnimalCompositeBow"
     | "MountBeast"
     | "MountFlyingBeast"
 ): UnitDetails<Unit> => {
@@ -35,9 +35,9 @@ const createWarlord = (
         None: 5,
         HeavyWeapon: 4,
         Bow: 4,
-        MountAnimal: 5,
+        MountedAnimal: 5,
         Flying: 5,
-        MountAnimalCompositeBow: 4,
+        MountedAnimalCompositeBow: 4,
         MountBeast: 5,
         MountFlyingBeast: 5,
       }[equipmentOptions],
@@ -45,9 +45,9 @@ const createWarlord = (
         None: 5,
         HeavyWeapon: 5,
         Bow: 4,
-        MountAnimal: 4,
+        MountedAnimal: 4,
         Flying: 4,
-        MountAnimalCompositeBow: 4,
+        MountedAnimalCompositeBow: 4,
         MountBeast: 5,
         MountFlyingBeast: 4,
       }[equipmentOptions],
@@ -57,9 +57,9 @@ const createWarlord = (
         None: 8,
         HeavyWeapon: 8,
         Bow: 8,
-        MountAnimal: 8,
+        MountedAnimal: 8,
         Flying: 8,
-        MountAnimalCompositeBow: 8,
+        MountedAnimalCompositeBow: 8,
         MountBeast: 10,
         MountFlyingBeast: 10,
       }[equipmentOptions],
@@ -69,9 +69,9 @@ const createWarlord = (
       None: specialRules,
       HeavyWeapon: specialRules,
       Bow: specialRules,
-      MountAnimal: specialRules,
+      MountedAnimal: specialRules,
       Flying: specialRules,
-      MountAnimalCompositeBow: specialRules,
+      MountedAnimalCompositeBow: specialRules,
       MountBeast: beastSpecialRules,
       MountFlyingBeast: beastSpecialRules,
     }[equipmentOptions],
@@ -83,7 +83,7 @@ const createWarlord = (
 };
 
 const createLieutenant = (
-  equipmentOptions: "None" | "HeavyWeapon" | "Bow" | "MountAnimal" | "Flying"
+  equipmentOptions: "None" | "HeavyWeapon" | "Bow" | "MountedAnimal" | "Flying"
 ): UnitDetails<Unit> => {
   return {
     unit: "Lieutenant",
@@ -94,14 +94,14 @@ const createLieutenant = (
         None: 5,
         HeavyWeapon: 4,
         Bow: 4,
-        MountAnimal: 5,
+        MountedAnimal: 5,
         Flying: 5,
       }[equipmentOptions],
       shooting: {
         None: 5,
         HeavyWeapon: 5,
         Bow: 4,
-        MountAnimal: 4,
+        MountedAnimal: 4,
         Flying: 4,
       }[equipmentOptions],
     },
@@ -121,7 +121,7 @@ const createLieutenant = (
 };
 
 const createSorcerer = (
-  equipmentOptions: "None" | "MountAnimal" | "Volant"
+  equipmentOptions: "None" | "MountedAnimal"
 ): UnitDetails<Unit> => {
   return {
     unit: "Sorcerer",
@@ -131,7 +131,7 @@ const createSorcerer = (
       melee: 3,
       shooting: {
         None: 4,
-        MountAnimal: 3,
+        MountedAnimal: 3,
         Volant: 3,
       }[equipmentOptions],
     },

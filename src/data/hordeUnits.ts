@@ -24,7 +24,7 @@ const createHordeMonster = (
 };
 
 const createChampion = (
-  equipmentOptions: "None" | "HeavyWeapon" | "MountAnimal"
+  equipmentOptions: "None" | "HeavyWeapon" | "MountedAnimal"
 ): UnitDetails<Unit> => {
   const champion = createLieutenant(equipmentOptions);
 
@@ -50,7 +50,7 @@ const createWarChariot = (): UnitDetails<Unit> => {
     specialRules: [
       "Devastating Charge",
       "Javelins",
-      "MountAnimal",
+      "MountedAnimal",
       "Presence",
       "Resilience(1)",
     ],
@@ -80,7 +80,7 @@ const hordeUnits: ArmyInterface = {
       variants: [
         createWarlord("None"),
         createWarlord("HeavyWeapon"),
-        createWarlord("MountAnimal"),
+        createWarlord("MountedAnimal"),
         createWarlord("MountBeast"),
       ],
     },
@@ -89,7 +89,7 @@ const hordeUnits: ArmyInterface = {
       variants: [
         createChampion("None"),
         createChampion("HeavyWeapon"),
-        createChampion("MountAnimal"),
+        createChampion("MountedAnimal"),
       ],
     },
     {
@@ -98,7 +98,7 @@ const hordeUnits: ArmyInterface = {
     },
     {
       unitName: "Sorcerer",
-      variants: [createSorcerer("None"), createSorcerer("MountAnimal")],
+      variants: [createSorcerer("None"), createSorcerer("MountedAnimal")],
     },
     {
       unitName: "Monsters",

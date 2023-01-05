@@ -76,8 +76,8 @@ const wildUnits: ArmyInterface = {
       variants: [
         createWarlord("None"),
         createWarlord("Bow"),
-        createWarlord("MountAnimal"),
-        createWarlord("MountAnimalCompositeBow"),
+        createWarlord("MountedAnimal"),
+        createWarlord("MountedAnimalCompositeBow"),
         createWarlord("MountBeast"),
         createWarlord("MountFlyingBeast"),
       ],
@@ -88,7 +88,7 @@ const wildUnits: ArmyInterface = {
     },
     {
       unitName: "Sorcerer",
-      variants: [createSorcerer("None"), createSorcerer("MountAnimal")],
+      variants: [createSorcerer("None"), createSorcerer("MountedAnimal")],
     },
     {
       unitName: "Monsters",

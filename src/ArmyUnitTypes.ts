@@ -39,6 +39,34 @@ const units = [
   "Destruction Team",
 ] as const;
 
+const equipmentOptions = [
+  "None",
+  "HeavyWeapon",
+  "Bow",
+  "MountedAnimal",
+  "Flying",
+  "MountedAnimalCompositeBow",
+  "MountBeast",
+  "MountFlyingBeast",
+  "Behemoth",
+  "Titan",
+  "ScourgeFlight",
+  "Biped",
+  "Biped (1)",
+  "Quadruped",
+  "Quadruped (1)",
+  "Flyers",
+  "Flyers (1)",
+  "MountedAnimalCompositeBow",
+  "Crossbow",
+  "Javelins",
+  "Firearms",
+  "Static",
+  "Mobile",
+  "WingedMount",
+  "Winged",
+] as const;
+
 interface UnitsToSpend {
   Creatures?: number;
   Hearthguards?: number;
@@ -48,7 +76,7 @@ interface UnitsToSpend {
 
 interface UnitDetails<T> {
   unit: T;
-  equipmentOptions: string;
+  equipmentOptions: typeof equipmentOptions[number];
   armour: {
     melee: number;
     shooting: number;
@@ -76,4 +104,4 @@ interface ArmyInterface {
 }
 
 export type { ArmyInterface, UnitDetails, Unit, UnitsToSpend };
-export { units, factions };
+export { units, factions, equipmentOptions };

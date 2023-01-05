@@ -13,7 +13,7 @@ import {
 } from "./baseUnits";
 
 const createNecromancer = (
-  equipmentOptions: "None" | "MountAnimal" | "MountBeast" | "MountFlyingBeast"
+  equipmentOptions: "None" | "MountedAnimal" | "MountBeast" | "MountFlyingBeast"
 ): UnitDetails<Unit> => {
   const specialRules = [
     "Bodyguards",
@@ -38,7 +38,7 @@ const createNecromancer = (
       melee: 4,
       shooting: {
         None: 4,
-        MountAnimal: 3,
+        MountedAnimal: 3,
         MountBeast: 4,
         MountFlyingBeast: 3,
       }[equipmentOptions],
@@ -46,7 +46,7 @@ const createNecromancer = (
     aggression: {
       melee: {
         None: 2,
-        MountAnimal: 2,
+        MountedAnimal: 2,
         MountBeast: 4,
         MountFlyingBeast: 4,
       }[equipmentOptions],
@@ -54,7 +54,7 @@ const createNecromancer = (
     },
     specialRules: {
       None: specialRules,
-      MountAnimal: specialRules,
+      MountedAnimal: specialRules,
       MountBeast: beastSpecialRules,
       MountFlyingBeast: beastSpecialRules,
     }[equipmentOptions],
@@ -94,9 +94,9 @@ const createWarlordWithUndeadRules = (
     | "None"
     | "HeavyWeapon"
     | "Bow"
-    | "MountAnimal"
+    | "MountedAnimal"
     | "Flying"
-    | "MountAnimalCompositeBow"
+    | "MountedAnimalCompositeBow"
     | "MountBeast"
     | "MountFlyingBeast"
 ): UnitDetails<Unit> => {
@@ -163,7 +163,7 @@ const undeadUnits: ArmyInterface = {
       unitName: "Warlord",
       variants: [
         createWarlordWithUndeadRules("None"),
-        createWarlordWithUndeadRules("MountAnimal"),
+        createWarlordWithUndeadRules("MountedAnimal"),
         createWarlordWithUndeadRules("MountBeast"),
         createWarlordWithUndeadRules("MountFlyingBeast"),
       ],
@@ -172,18 +172,18 @@ const undeadUnits: ArmyInterface = {
       unitName: "Necromancer",
       variants: [
         createNecromancer("None"),
-        createNecromancer("MountAnimal"),
+        createNecromancer("MountedAnimal"),
         createNecromancer("MountBeast"),
         createNecromancer("MountFlyingBeast"),
       ],
     },
     {
       unitName: "Lieutenant",
-      variants: [createLieutenant("None"), createLieutenant("MountAnimal")],
+      variants: [createLieutenant("None"), createLieutenant("MountedAnimal")],
     },
     {
       unitName: "Sorcerer",
-      variants: [createSorcerer("None"), createSorcerer("MountAnimal")],
+      variants: [createSorcerer("None"), createSorcerer("MountedAnimal")],
     },
     {
       unitName: "Monsters",
